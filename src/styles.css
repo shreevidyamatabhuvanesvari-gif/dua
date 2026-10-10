@@ -1,0 +1,516 @@
+:root {
+  color-scheme: dark;
+  font-family: "Noto Sans Devanagari", "Mangal", "Nirmala UI", sans-serif;
+  background: #0b100f;
+  color: #f1f5f0;
+  --panel: #131a17;
+  --border: #29362f;
+  --muted: #a3b0a7;
+  --accent: #d7ef9c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at top left, #1b2a20, transparent 38rem),
+    #0b100f;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.app-shell {
+  width: min(1180px, calc(100% - 32px));
+  margin: auto;
+  padding: 24px 0 36px;
+}
+
+.app-header,
+.brand-lockup,
+.header-status,
+.panel-heading,
+.welcome-strip,
+.video-actions,
+.text-tools,
+.reading-controls,
+.rate-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.app-header {
+  margin-bottom: 24px;
+}
+
+.brand-lockup {
+  justify-content: flex-start;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: var(--accent);
+  color: #17200f;
+  font-weight: 700;
+}
+
+.brand-lockup h1,
+.panel-heading h2,
+.welcome-strip h2 {
+  margin: 0;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.header-status,
+.mini-tag {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 8px 12px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 7px;
+  border-radius: 50%;
+  background: #7f8b83;
+}
+
+.status-dot--reading {
+  background: #a9df6b;
+}
+
+.status-dot--paused {
+  background: #ffca76;
+}
+
+.status-dot--completed {
+  background: #82d9b3;
+}
+
+.welcome-strip {
+  margin-bottom: 22px;
+  padding: 26px;
+  border: 1px solid #354735;
+  border-radius: 20px;
+  background: linear-gradient(115deg, #1a281e, #151d19);
+}
+
+.welcome-strip h2 {
+  margin-bottom: 10px;
+  font-size: clamp(22px, 3vw, 30px);
+}
+
+.welcome-strip p:not(.eyebrow) {
+  max-width: 650px;
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.welcome-symbol {
+  flex-shrink: 0;
+  color: var(--accent);
+  font-size: 42px;
+}
+
+.studio-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  align-items: start;
+  gap: 22px;
+}
+
+.panel {
+  min-width: 0;
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--panel);
+}
+
+.panel-heading {
+  margin-bottom: 20px;
+}
+
+.video-frame {
+  display: grid;
+  place-items: center;
+  width: min(100%, 350px);
+  margin: auto;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: #080c0a;
+}
+
+.studio-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.video-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 22px;
+  text-align: center;
+}
+
+.video-empty-icon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border: 1px solid #53694a;
+  border-radius: 50%;
+  color: var(--accent);
+}
+
+.video-empty-state span {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.video-actions,
+.text-tools,
+.reading-controls {
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 10px 14px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.button--primary {
+  background: var(--accent);
+  color: #17200f;
+}
+
+.button--secondary {
+  border-color: #35443a;
+  background: #1a231e;
+  color: var(--text, #f1f5f0);
+}
+
+.file-pick-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.visually-hidden-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+}
+
+.file-meta {
+  overflow-wrap: anywhere;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.field-label {
+  display: block;
+  margin-bottom: 8px;
+  color: #d5dfd7;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.reading-textarea {
+  display: block;
+  width: 100%;
+  min-height: 220px;
+  padding: 14px;
+  border: 1px solid #34443a;
+  border-radius: 13px;
+  background: #0c120f;
+  color: #f1f5f0;
+  font-size: 15px;
+  line-height: 1.9;
+  resize: vertical;
+}
+
+.text-button {
+  border: 0;
+  background: transparent;
+  color: #c9d5cb;
+  font-size: 12px;
+}
+
+.settings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 13px;
+  margin-top: 18px;
+}
+
+.setting-control {
+  min-width: 0;
+}
+
+.select-control {
+  width: 100%;
+  min-height: 42px;
+  padding: 8px;
+  border: 1px solid #34443a;
+  border-radius: 10px;
+  background: #0c120f;
+  color: #f1f5f0;
+}
+
+.rate-control {
+  margin-top: 18px;
+}
+
+.range-control {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.range-ends {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.inline-warning {
+  color: #ffd28b;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.progress-panel {
+  margin-top: 22px;
+}
+
+.progress-count {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.progress-track {
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #29352d;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.2s ease;
+}
+
+.line-list {
+  display: grid;
+  gap: 8px;
+  padding: 0;
+  margin: 18px 0 0;
+  list-style: none;
+}
+
+.line-item {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #0d130f;
+}
+
+.line-item--current {
+  border-color: #9dbd72;
+  background: #1a281c;
+}
+
+.line-item--done {
+  border-color: #2e5140;
+}
+
+.line-number {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: #1b261f;
+  font-size: 11px;
+}
+
+.line-content {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.line-state {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.empty-lines-state {
+  padding: 28px 14px;
+  color: var(--muted);
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.app-footer {
+  padding-top: 18px;
+}
+
+.message-indicator {
+  padding: 12px 14px;
+  border: 1px solid #344438;
+  border-radius: 12px;
+  background: #131d16;
+  line-height: 1.8;
+  font-size: 12px;
+}
+
+.app-footer > p {
+  color: #829087;
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+.startup-error {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 12px;
+  min-height: 100vh;
+  padding: 24px;
+  background: var(--page);
+  color: var(--text);
+  text-align: center;
+}
+
+.startup-error__mark {
+  color: var(--accent);
+  font-size: 44px;
+}
+
+.startup-error h1 {
+  margin: 0;
+}
+
+.startup-error button {
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #17200f;
+}
+
+@media (max-width: 850px) {
+  .studio-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .video-frame {
+    width: min(100%, 310px);
+  }
+}
+
+@media (max-width: 560px) {
+  .app-shell {
+    width: calc(100% - 22px);
+    padding-top: 16px;
+  }
+
+  .app-header {
+    gap: 8px;
+  }
+
+  .brand-mark {
+    width: 44px;
+    height: 44px;
+  }
+
+  .brand-lockup h1 {
+    font-size: 23px;
+  }
+
+  .welcome-strip,
+  .panel {
+    padding: 16px;
+  }
+
+  .welcome-symbol {
+    font-size: 28px;
+  }
+
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .line-item {
+    grid-template-columns: 30px minmax(0, 1fr);
+    gap: 9px;
+  }
+
+  .line-state {
+    grid-column: 2;
+  }
+}
