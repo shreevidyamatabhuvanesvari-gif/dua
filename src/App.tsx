@@ -1,11 +1,22 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import type { ChangeEvent } from 'react';
 
 type ReadStatus = 'ready' | 'reading' | 'paused' | 'completed';
 type SpeechLanguage = 'hi-IN' | 'sa-IN';
 
-const SAMPLE_TEXT = 'अग्निमीळे पुरोहितं यज्ञस्य देवमृत्विजम्।\nहोतारं रत्नधातमम्॥';
+const SAMPLE_TEXT =
+  'अग्निमीळे पुरोहितं यज्ञस्य देवमृत्विजम्।\nहोतारं रत्नधातमम्॥';
 
+/**
+ * पाठ को वाचन की अलग-अलग पंक्तियों में बाँटता है।
+ * देवनागरी अक्षरों और वैदिक चिह्नों को बदलता नहीं है।
+ */
 function splitTextIntoLines(value: string): string[] {
   const physicalLines = value
     .replace(/\r\n?/g, '\n')
@@ -13,8 +24,6 @@ function splitTextIntoLines(value: string): string[] {
     .map((line) => line.trim())
     .filter(Boolean);
 
-  // एक ही पैराग्राफ में पाठ पेस्ट किया गया हो तो विरामचिह्नों पर
-  // वाचन इकाइयाँ बनाएँ। वैदिक चिह्नों को सामान्यीकृत नहीं किया जाता।
   if (physicalLines.length === 1) {
     return physicalLines[0]
       .split(/(?<=[।॥.!?])\s+/u)
@@ -25,6 +34,10 @@ function splitTextIntoLines(value: string): string[] {
   return physicalLines;
 }
 
+/**
+ * चुनी गई भाषा के अनुकूल ब्राउज़र वाणी खोजता है।
+ * संस्कृत वाणी न मिलने पर हिंदी या अन्य उपलब्ध वाणी मिल सकती है।
+ */
 function chooseVoice(
   language: SpeechLanguage,
   voices: SpeechSynthesisVoice[],
@@ -34,6 +47,7 @@ function chooseVoice(
     const selected = voices.find(
       (voice) => voice.voiceURI === selectedVoiceURI,
     );
+
     if (selected) return selected;
   }
 
@@ -43,8 +57,9 @@ function chooseVoice(
     voices.find(
       (voice) => voice.lang.toLowerCase() === language.toLowerCase(),
     ) ??
-    voices.find((voice) =>
-      voice.lang.toLowerCase().startsWith(`${languageCode}-`),
+    voices.find(
+      (voice) =>
+        voice.lang.toLowerCase().startsWith(`${languageCode}-`),
     ) ??
     (language === 'sa-IN'
       ? voices.find((voice) =>
@@ -77,13 +92,19 @@ export default function App() {
   const sessionRef = useRef(0);
   const linesRef = useRef<string[]>([]);
 
-  const lines = useMemo(() => splitTextIntoLines(text), [text]);
+  const lines = useMemo(
+    () => splitTextIntoLines(text),
+    [text],
+  );
 
   const speechSupported =
     typeof window !== 'undefined' &&
     'speechSynthesis' in window &&
     typeof SpeechSynthesisUtterance !== 'undefined';
 
+  /**
+   * उपलब्ध ब्राउज़र वाणियों की सूची लोड करता है।
+   */
   useEffect(() => {
     if (!speechSupported) return;
 
@@ -92,6 +113,7 @@ export default function App() {
     };
 
     refreshVoices();
+
     window.speechSynthesis.addEventListener(
       'voiceschanged',
       refreshVoices,
@@ -105,6 +127,9 @@ export default function App() {
     };
   }, [speechSupported]);
 
+  /**
+   * ऐप बंद होने पर चल रहे वाचन और स्थानीय वीडियो URL की सफाई।
+   */
   useEffect(() => {
     return () => {
       readingRef.current = false;
@@ -116,10 +141,14 @@ export default function App() {
 
       if (objectUrlRef.current) {
         URL.revokeObjectURL(objectUrlRef.current);
+        objectUrlRef.current = null;
       }
     };
   }, []);
 
+  /**
+   * पाठ या वीडियो में बदलाव से पहले पुराना वाचन रोकता है।
+   */
   const stopForContentChange = useCallback(() => {
     readingRef.current = false;
     sessionRef.current += 1;
@@ -141,16 +170,21 @@ export default function App() {
     event: ChangeEvent<HTMLTextAreaElement>,
   ) => {
     stopForContentChange();
-    setText(event.target.value);
+    setText(event.currentTarget.value);
     setMessage(
-      'पाठ बदला गया है। वाचन शुरू करने पर हर पंक्ति क्रम से पढ़ी जाएगी।',
+      'पाठ बदला गया है। वाचन शुरू करने पर पंक्तियाँ क्रम से पढ़ी जाएँगी।',
     );
   };
 
+  /**
+   * स्थानीय वीडियो फ़ाइल चुनने और लोड करने का कार्य।
+   */
   const handleVideoUpload = (
     event: ChangeEvent<HTMLInputElement>,
   ) => {
-    const file = event.target.files?.[0];
+    const input = event.currentTarget;
+    const file = input.files?.[0];
+
     if (!file) return;
 
     const looksLikeVideo =
@@ -158,44 +192,73 @@ export default function App() {
       /\.(mp4|webm|ogg|mov|m4v|avi)$/i.test(file.name);
 
     if (!looksLikeVideo) {
-      setMessage('कृपया वीडियो फ़ाइल चुनें।');
-      event.target.value = '';
+      setMessage('कृपया समर्थित वीडियो फ़ाइल चुनें।');
+      input.value = '';
       return;
     }
+
+    stopForContentChange();
 
     if (objectUrlRef.current) {
       URL.revokeObjectURL(objectUrlRef.current);
     }
 
     const nextUrl = URL.createObjectURL(file);
+
     objectUrlRef.current = nextUrl;
     setVideoUrl(nextUrl);
     setVideoName(file.name);
     setMessage(`वीडियो तैयार है: ${file.name}`);
-    event.target.value = '';
+
+    input.value = '';
   };
 
+  /**
+   * TXT या MD फ़ाइल से पाठ पढ़ता है।
+   */
   const handleTextFileUpload = async (
     event: ChangeEvent<HTMLInputElement>,
   ) => {
-    const file = event.target.files?.[0];
+    const input = event.currentTarget;
+    const file = input.files?.[0];
+
     if (!file) return;
 
     try {
       const content = await file.text();
+
       stopForContentChange();
       setText(content);
       setMessage(`पाठ फ़ाइल लोड हुई: ${file.name}`);
     } catch (error) {
       console.error('पाठ फ़ाइल पढ़ने में त्रुटि:', error);
+
       setMessage(
         'पाठ फ़ाइल पढ़ी नहीं जा सकी। कृपया UTF-8 TXT फ़ाइल आज़माएँ।',
       );
     } finally {
-      event.target.value = '';
+      input.value = '';
     }
   };
 
+  /**
+   * सभी पंक्तियों का वाचन पूरा होने पर स्थिति अपडेट करता है।
+   */
+  const finishReading = useCallback(() => {
+    readingRef.current = false;
+    setStatus('completed');
+    setMessage('सभी पंक्तियों का वाचन पूरा हुआ।');
+
+    if (videoRef.current) {
+      videoRef.current.loop = false;
+      videoRef.current.pause();
+    }
+  }, []);
+
+  /**
+   * एक पंक्ति पढ़ता है और उसके पूरा होने पर अगली पंक्ति शुरू करता है।
+   * sessionId पुराने वाचन की घटनाओं को नए वाचन में हस्तक्षेप करने से रोकता है।
+   */
   const speakLine = useCallback(
     (lineIndex: number, sessionId: number) => {
       if (
@@ -208,21 +271,14 @@ export default function App() {
       const currentLines = linesRef.current;
 
       if (lineIndex >= currentLines.length) {
-        readingRef.current = false;
-        setStatus('completed');
-        setMessage('सभी पंक्तियों का वाचन पूरा हुआ।');
-
-        if (videoRef.current) {
-          videoRef.current.loop = false;
-          videoRef.current.pause();
-        }
-
+        finishReading();
         return;
       }
 
       const utterance = new SpeechSynthesisUtterance(
         currentLines[lineIndex],
       );
+
       const voice = chooseVoice(
         language,
         voices,
@@ -255,20 +311,12 @@ export default function App() {
         if (nextIndex < linesRef.current.length) {
           setCurrentLineIndex(nextIndex);
 
-          // अगली पंक्ति तभी शुरू होती है जब वर्तमान utterance का
-          // onend इवेंट आ चुका हो।
+          // अगली पंक्ति तभी शुरू होती है जब वर्तमान पंक्ति पूरी हो जाती है।
           window.setTimeout(() => {
             speakLine(nextIndex, sessionId);
           }, 80);
         } else {
-          readingRef.current = false;
-          setStatus('completed');
-          setMessage('सभी पंक्तियों का वाचन पूरा हुआ।');
-
-          if (videoRef.current) {
-            videoRef.current.loop = false;
-            videoRef.current.pause();
-          }
+          finishReading();
         }
       };
 
@@ -281,9 +329,11 @@ export default function App() {
         }
 
         readingRef.current = false;
+        sessionRef.current += 1;
+
         setStatus('ready');
         setMessage(
-          `वाचन रुक गया (${event.error || 'अज्ञात त्रुटि'})। उपलब्ध वाणी जाँचें और फिर प्रयास करें।`,
+          `वाचन रुक गया (${event.error || 'अज्ञात त्रुटि'})। उपलब्ध वाणी जाँचकर फिर प्रयास करें।`,
         );
 
         if (videoRef.current) {
@@ -292,11 +342,29 @@ export default function App() {
         }
       };
 
-      window.speechSynthesis.speak(utterance);
+      try {
+        window.speechSynthesis.speak(utterance);
+      } catch (error) {
+        console.error('वाचन शुरू करने में त्रुटि:', error);
+
+        readingRef.current = false;
+        sessionRef.current += 1;
+        setStatus('ready');
+        setMessage('वाचन शुरू नहीं हो पाया। कृपया फिर प्रयास करें।');
+      }
     },
-    [language, rate, selectedVoiceURI, voices],
+    [
+      finishReading,
+      language,
+      rate,
+      selectedVoiceURI,
+      voices,
+    ],
   );
 
+  /**
+   * नया वाचन शुरू करता है।
+   */
   const startReading = () => {
     if (!speechSupported) {
       setMessage(
@@ -338,7 +406,7 @@ export default function App() {
       !chosenVoice.lang.toLowerCase().startsWith('sa-')
     ) {
       setMessage(
-        'इस डिवाइस पर अलग संस्कृत वाणी नहीं मिली; उपलब्ध वाणी से प्रयास किया जा रहा है। शुद्ध वैदिक उच्चारण की गारंटी नहीं है।',
+        'अलग संस्कृत वाणी नहीं मिली। उपलब्ध वाणी से प्रयास होगा; शुद्ध वैदिक स्वर और उच्चारण की गारंटी नहीं है।',
       );
     } else {
       setMessage(
@@ -351,10 +419,14 @@ export default function App() {
     if (video && videoUrl) {
       video.loop = true;
 
-      void video.play().catch(() => {
-        setMessage(
-          'वाचन शुरू है। वीडियो चलाने के लिए वीडियो प्ले बटन दबाएँ।',
-        );
+      void video.play().catch((error: unknown) => {
+        console.warn('वीडियो अपने-आप नहीं चल पाया:', error);
+
+        if (sessionRef.current === sessionId) {
+          setMessage(
+            'वाचन शुरू है। वीडियो चलाने के लिए वीडियो का प्ले बटन दबाएँ।',
+          );
+        }
       });
     }
 
@@ -367,7 +439,7 @@ export default function App() {
     window.speechSynthesis.pause();
     setStatus('paused');
     setMessage(
-      'वाचन रोका गया है। वीडियो चलता रह सकता है; जारी रखने के लिए आगे बढ़ाएँ।',
+      'वाचन रोका गया है। वीडियो चलता रह सकता है। जारी रखने के लिए बटन दबाएँ।',
     );
   };
 
@@ -412,6 +484,19 @@ export default function App() {
     setMessage('पाठ साफ़ कर दिया गया।');
   };
 
+  const removeVideo = () => {
+    stopForContentChange();
+
+    if (objectUrlRef.current) {
+      URL.revokeObjectURL(objectUrlRef.current);
+      objectUrlRef.current = null;
+    }
+
+    setVideoUrl('');
+    setVideoName('');
+    setMessage('वीडियो हटा दिया गया।');
+  };
+
   const progress =
     lines.length > 0 && status !== 'ready'
       ? Math.min(
@@ -420,6 +505,15 @@ export default function App() {
         )
       : 0;
 
+  const displayedProgress =
+    lines.length === 0
+      ? 0
+      : status === 'completed'
+        ? lines.length
+        : status === 'ready'
+          ? 0
+          : Math.min(currentLineIndex + 1, lines.length);
+
   return (
     <main className="app-shell">
       <header className="app-header">
@@ -427,6 +521,7 @@ export default function App() {
           <div className="brand-mark" aria-hidden="true">
             श्रु
           </div>
+
           <div>
             <p className="eyebrow">वैदिक वीडियो वाचन स्टूडियो</p>
             <h1>श्रुति</h1>
@@ -438,6 +533,7 @@ export default function App() {
             className={`status-dot status-dot--${status}`}
             aria-hidden="true"
           />
+
           <span>
             {status === 'reading'
               ? 'वाचन जारी'
@@ -455,10 +551,12 @@ export default function App() {
           <p className="eyebrow">स्थानीय रूप से काम करें</p>
           <h2>पाठ को सुनें, पंक्ति-दर-पंक्ति</h2>
           <p>
-            अपना वीडियो और पाठ जोड़ें। वाचन ब्राउज़र की उपलब्ध वाणी का
-            उपयोग करता है; बाहरी API की आवश्यकता नहीं है।
+            अपना वीडियो और पाठ जोड़ें। वाचन ब्राउज़र की उपलब्ध
+            वाणी का उपयोग करता है; बाहरी वाचन API की आवश्यकता
+            नहीं है।
           </p>
         </div>
+
         <div className="welcome-symbol" aria-hidden="true">
           ॐ
         </div>
@@ -471,6 +569,7 @@ export default function App() {
               <p className="eyebrow">01 / दृश्य</p>
               <h2>वीडियो स्टूडियो</h2>
             </div>
+
             <span className="mini-tag">9:16 पोर्ट्रेट</span>
           </div>
 
@@ -488,13 +587,20 @@ export default function App() {
                 muted={isVideoMuted}
                 loop={status === 'reading' || status === 'paused'}
                 aria-label="अपलोड किया गया वीडियो"
+                onError={() => {
+                  setMessage(
+                    'वीडियो चल नहीं पाया। फ़ाइल का फ़ॉर्मेट जाँचकर दूसरी वीडियो चुनें।',
+                  );
+                }}
               />
             ) : (
               <div className="video-empty-state">
                 <div className="video-empty-icon" aria-hidden="true">
                   ▶
                 </div>
+
                 <strong>आपका वीडियो यहाँ दिखाई देगा</strong>
+
                 <span>
                   MP4, WebM या ब्राउज़र द्वारा समर्थित वीडियो चुनें
                 </span>
@@ -504,7 +610,9 @@ export default function App() {
 
           <div className="video-actions">
             <label className="button button--primary file-pick-button">
-              <span aria-hidden="true">＋</span> वीडियो चुनें
+              <span aria-hidden="true">＋</span>
+              वीडियो चुनें
+
               <input
                 className="visually-hidden-input"
                 type="file"
@@ -524,6 +632,16 @@ export default function App() {
                 ? 'वीडियो आवाज़ चालू करें'
                 : 'वीडियो म्यूट करें'}
             </button>
+
+            {videoUrl && (
+              <button
+                className="button button--secondary"
+                type="button"
+                onClick={removeVideo}
+              >
+                वीडियो हटाएँ
+              </button>
+            )}
           </div>
 
           <p className="file-meta">
@@ -540,6 +658,7 @@ export default function App() {
               <p className="eyebrow">02 / पाठ</p>
               <h2>वाचन-पाठ</h2>
             </div>
+
             <span className="mini-tag">संस्कृत · हिंदी</span>
           </div>
 
@@ -562,6 +681,7 @@ export default function App() {
           <div className="text-tools">
             <label className="button button--secondary file-pick-button">
               TXT फ़ाइल जोड़ें
+
               <input
                 className="visually-hidden-input"
                 type="file"
@@ -589,28 +709,42 @@ export default function App() {
 
           <div className="settings-grid">
             <div className="setting-control">
-              <label className="field-label" htmlFor="speech-language">
+              <label
+                className="field-label"
+                htmlFor="speech-language"
+              >
                 वाचन भाषा
               </label>
+
               <select
                 id="speech-language"
                 className="select-control"
                 value={language}
                 onChange={(event) => {
-                  setLanguage(event.target.value as SpeechLanguage);
+                  setLanguage(
+                    event.target.value as SpeechLanguage,
+                  );
                   setSelectedVoiceURI('');
                 }}
-                disabled={status === 'reading' || status === 'paused'}
+                disabled={
+                  status === 'reading' || status === 'paused'
+                }
               >
                 <option value="hi-IN">हिंदी</option>
-                <option value="sa-IN">संस्कृत (यदि उपलब्ध हो)</option>
+                <option value="sa-IN">
+                  संस्कृत (यदि उपलब्ध हो)
+                </option>
               </select>
             </div>
 
             <div className="setting-control">
-              <label className="field-label" htmlFor="speech-voice">
+              <label
+                className="field-label"
+                htmlFor="speech-voice"
+              >
                 उपलब्ध ब्राउज़र वाणी
               </label>
+
               <select
                 id="speech-voice"
                 className="select-control"
@@ -618,11 +752,17 @@ export default function App() {
                 onChange={(event) =>
                   setSelectedVoiceURI(event.target.value)
                 }
-                disabled={status === 'reading' || status === 'paused'}
+                disabled={
+                  status === 'reading' || status === 'paused'
+                }
               >
                 <option value="">स्वचालित चयन</option>
+
                 {voices.map((voice) => (
-                  <option key={voice.voiceURI} value={voice.voiceURI}>
+                  <option
+                    key={voice.voiceURI}
+                    value={voice.voiceURI}
+                  >
                     {voice.name} ({voice.lang})
                     {voice.default ? ' · डिफ़ॉल्ट' : ''}
                   </option>
@@ -633,10 +773,16 @@ export default function App() {
 
           <div className="rate-control">
             <div className="rate-label-row">
-              <label className="field-label" htmlFor="speech-rate">
+              <label
+                className="field-label"
+                htmlFor="speech-rate"
+              >
                 वाचन गति
               </label>
-              <output htmlFor="speech-rate">{rate.toFixed(2)}×</output>
+
+              <output htmlFor="speech-rate">
+                {rate.toFixed(2)}×
+              </output>
             </div>
 
             <input
@@ -647,8 +793,12 @@ export default function App() {
               max="1.2"
               step="0.05"
               value={rate}
-              onChange={(event) => setRate(Number(event.target.value))}
-              disabled={status === 'reading' || status === 'paused'}
+              onChange={(event) =>
+                setRate(Number(event.target.value))
+              }
+              disabled={
+                status === 'reading' || status === 'paused'
+              }
             />
 
             <div className="range-ends">
@@ -705,22 +855,20 @@ export default function App() {
         </div>
       </section>
 
-      <section className="panel progress-panel" aria-labelledby="progress-heading">
+      <section
+        className="panel progress-panel"
+        aria-labelledby="progress-heading"
+      >
         <div className="panel-heading progress-heading-row">
           <div>
             <p className="eyebrow">03 / प्रगति</p>
-            <h2 id="progress-heading">पंक्ति-दर-पंक्ति वाचन</h2>
+            <h2 id="progress-heading">
+              पंक्ति-दर-पंक्ति वाचन
+            </h2>
           </div>
+
           <span className="progress-count">
-            {lines.length === 0
-              ? 0
-              : status === 'completed'
-                ? lines.length
-                : Math.min(
-                    currentLineIndex + (status === 'ready' ? 0 : 1),
-                    lines.length,
-                  )}{' '}
-            / {lines.length} पंक्तियाँ
+            {displayedProgress} / {lines.length} पंक्तियाँ
           </span>
         </div>
 
@@ -735,7 +883,11 @@ export default function App() {
           <div
             className="progress-fill"
             style={{
-              width: `${lines.length ? (progress / lines.length) * 100 : 0}%`,
+              width: `${
+                lines.length
+                  ? (progress / lines.length) * 100
+                  : 0
+              }%`,
             }}
           />
         </div>
@@ -749,15 +901,20 @@ export default function App() {
 
               const isDone =
                 status === 'completed' ||
-                (status !== 'ready' && index < currentLineIndex);
+                (status !== 'ready' &&
+                  index < currentLineIndex);
 
               return (
                 <li
-                  className={`line-item${isCurrent ? ' line-item--current' : ''}${isDone ? ' line-item--done' : ''}`}
+                  className={`line-item${
+                    isCurrent ? ' line-item--current' : ''
+                  }${isDone ? ' line-item--done' : ''}`}
                   key={`${index}-${line}`}
                 >
                   <span className="line-number">
-                    {isDone ? '✓' : String(index + 1).padStart(2, '0')}
+                    {isDone
+                      ? '✓'
+                      : String(index + 1).padStart(2, '0')}
                   </span>
 
                   <span className="line-content">{line}</span>
@@ -783,12 +940,17 @@ export default function App() {
       </section>
 
       <footer className="app-footer">
-        <div className="message-indicator" aria-live="polite" role="status">
+        <div
+          className="message-indicator"
+          aria-live="polite"
+          role="status"
+        >
           {message}
         </div>
+
         <p>
-          पाठ आपके डिवाइस पर रहता है। उच्चारण और उपलब्ध वाणियाँ ब्राउज़र
-          तथा डिवाइस के अनुसार बदल सकती हैं।
+          पाठ आपके डिवाइस पर रहता है। उच्चारण और उपलब्ध
+          वाणियाँ ब्राउज़र तथा डिवाइस के अनुसार बदल सकती हैं।
         </p>
       </footer>
     </main>
