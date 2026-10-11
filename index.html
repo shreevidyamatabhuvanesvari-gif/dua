@@ -233,7 +233,8 @@
       }
 
       /* =====================================================
-         अतिरिक्त सुविधा: वीडियो स्क्रीन पर वर्तमान TTS पंक्ति
+         अतिरिक्त सुविधा:
+         वीडियो के मध्य में वर्तमान TTS पंक्ति का डिस्प्ले
          ===================================================== */
 
       #shruti-video-tts-overlay[hidden] {
@@ -244,10 +245,10 @@
         position: fixed;
         z-index: 2147483647;
         display: flex;
-        align-items: flex-end;
+        align-items: center;
         justify-content: center;
         box-sizing: border-box;
-        padding: 0 3% 12%;
+        padding: 3%;
         overflow: hidden;
         pointer-events: none;
         background: transparent;
@@ -255,21 +256,21 @@
 
       #shruti-video-tts-caption {
         width: 100%;
-        max-height: 45%;
+        max-height: 60%;
         overflow-y: auto;
-        padding: 10px 16px;
-        border: 1px solid rgba(244, 207, 117, 0.72);
+        padding: 12px 18px;
+        border: 1px solid rgba(244, 207, 117, 0.55);
         border-radius: 14px;
-        background: rgba(12, 8, 24, 0.86);
-        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+        background: rgba(12, 8, 24, 0.64);
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.28);
         text-align: center;
         overflow-wrap: anywhere;
-        -webkit-backdrop-filter: blur(5px);
-        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(3px);
+        backdrop-filter: blur(3px);
       }
 
       #shruti-video-tts-heading {
-        margin: 0 0 4px;
+        margin: 0 0 5px;
         color: #f2d18a;
         font-size: clamp(11px, 1.8vw, 15px);
         font-weight: 700;
@@ -278,9 +279,9 @@
       #shruti-video-tts-line {
         margin: 0;
         color: #ffe078;
-        font-size: clamp(17px, 3vw, 30px);
+        font-size: clamp(19px, 3.2vw, 32px);
         font-weight: 800;
-        line-height: 1.65;
+        line-height: 1.7;
         white-space: pre-wrap;
         overflow-wrap: anywhere;
         background: linear-gradient(
@@ -300,16 +301,17 @@
 
       @media (max-width: 480px) {
         #shruti-video-tts-overlay {
-          padding: 0 2% 13%;
+          padding: 2%;
         }
 
         #shruti-video-tts-caption {
-          padding: 7px 9px;
+          padding: 8px 10px;
           border-radius: 10px;
         }
 
         #shruti-video-tts-line {
-          font-size: clamp(15px, 4vw, 21px);
+          font-size: clamp(16px, 4vw, 22px);
+          line-height: 1.65;
         }
       }
     </style>
@@ -393,7 +395,7 @@
       </div>
     </noscript>
 
-    <!-- अतिरिक्त सुविधा: वीडियो पर वर्तमान TTS पंक्ति दिखाएँ -->
+    <!-- वीडियो के मध्य में वर्तमान TTS पंक्ति दिखाने की अतिरिक्त सुविधा -->
     <script>
       (function installShrutiVideoCaption() {
         "use strict";
@@ -404,10 +406,9 @@
           return;
         }
 
-        let panel;
-        let caption;
-        let heading;
-        let lineElement;
+        let panel = null;
+        let caption = null;
+        let lineElement = null;
         let currentUtterance = null;
         let currentText = "";
         let hideTimer = null;
@@ -418,7 +419,6 @@
           if (document.getElementById("shruti-video-tts-overlay")) {
             panel = document.getElementById("shruti-video-tts-overlay");
             caption = document.getElementById("shruti-video-tts-caption");
-            heading = document.getElementById("shruti-video-tts-heading");
             lineElement = document.getElementById("shruti-video-tts-line");
             return;
           }
@@ -426,18 +426,19 @@
           panel = document.createElement("div");
           panel.id = "shruti-video-tts-overlay";
           panel.hidden = true;
-          panel.setAttribute("aria-label", "वीडियो पर वर्तमान वाचन");
+          panel.setAttribute("aria-label", "वीडियो के मध्य में वर्तमान वाचन");
 
           caption = document.createElement("div");
           caption.id = "shruti-video-tts-caption";
 
-          heading = document.createElement("p");
+          const heading = document.createElement("p");
           heading.id = "shruti-video-tts-heading";
           heading.textContent = "🔊 वर्तमान वाचन";
 
           lineElement = document.createElement("p");
           lineElement.id = "shruti-video-tts-line";
           lineElement.setAttribute("aria-live", "polite");
+          lineElement.setAttribute("aria-atomic", "true");
 
           caption.appendChild(heading);
           caption.appendChild(lineElement);
@@ -453,15 +454,21 @@
               const rect = video.getBoundingClientRect();
               const style = window.getComputedStyle(video);
 
+              const visible =
+                rect.width > 80 &&
+                rect.height > 50 &&
+                rect.bottom > 0 &&
+                rect.right > 0 &&
+                rect.top < window.innerHeight &&
+                rect.left < window.innerWidth &&
+                style.display !== "none" &&
+                style.visibility !== "hidden" &&
+                Number(style.opacity) > 0;
+
               return {
                 element: video,
                 area: rect.width * rect.height,
-                visible:
-                  rect.width > 80 &&
-                  rect.height > 50 &&
-                  style.display !== "none" &&
-                  style.visibility !== "hidden" &&
-                  Number(style.opacity) > 0
+                visible: visible
               };
             })
             .filter(function (item) {
@@ -478,7 +485,9 @@
 
         function positionOverlay() {
           if (!panel || !currentText) {
-            if (panel) panel.hidden = true;
+            if (panel) {
+              panel.hidden = true;
+            }
             return;
           }
 
@@ -519,7 +528,9 @@
         function displayText(text) {
           const clean = String(text || "").trim();
 
-          if (!clean) return;
+          if (!clean) {
+            return;
+          }
 
           clearTimer();
           currentText = clean;
@@ -544,7 +555,9 @@
         function getCurrentLine(text, charIndex) {
           const source = String(text || "").replace(/\r/g, "");
 
-          if (!source.trim()) return "";
+          if (!source.trim()) {
+            return "";
+          }
 
           const index = Math.max(
             0,
@@ -568,7 +581,9 @@
 
             const line = source.slice(start, end).trim();
 
-            if (line) return line;
+            if (line) {
+              return line;
+            }
           }
 
           const punctuation = /[।॥.!?;]/g;
@@ -630,7 +645,9 @@
           });
 
           addUtteranceEvent(utterance, "boundary", function (event) {
-            if (currentUtterance !== utterance) return;
+            if (currentUtterance !== utterance) {
+              return;
+            }
 
             if (event && typeof event.charIndex === "number") {
               displayText(getCurrentLine(source, event.charIndex));
@@ -638,7 +655,9 @@
           });
 
           function finish() {
-            if (currentUtterance !== utterance) return;
+            if (currentUtterance !== utterance) {
+              return;
+            }
 
             clearTimer();
 
@@ -659,7 +678,20 @@
           }
 
           const original = object[name];
+
+          if (original.__shrutiVideoCaptionPatched) {
+            return true;
+          }
+
           const wrapped = wrapperFactory(original);
+
+          try {
+            Object.defineProperty(wrapped, "__shrutiVideoCaptionPatched", {
+              value: true
+            });
+          } catch (error) {
+            /* यह वैकल्पिक चिह्न है; सुविधा इसके बिना भी चल सकती है। */
+          }
 
           try {
             Object.defineProperty(object, name, {
@@ -668,17 +700,39 @@
               value: wrapped
             });
 
-            if (object[name] === wrapped) return true;
+            if (object[name] === wrapped) {
+              return true;
+            }
           } catch (error) {
-            /* वैकल्पिक प्रयास नीचे किया जाता है। */
+            /* कुछ ब्राउज़र native method बदलने नहीं देते। */
           }
 
           try {
             object[name] = wrapped;
 
-            if (object[name] === wrapped) return true;
+            if (object[name] === wrapped) {
+              return true;
+            }
           } catch (error) {
-            /* कुछ ब्राउज़र native method बदलने की अनुमति नहीं देते। */
+            /* prototype पर वैकल्पिक प्रयास नीचे किया जाता है। */
+          }
+
+          try {
+            const prototype = Object.getPrototypeOf(object);
+
+            if (prototype && prototype[name] === original) {
+              Object.defineProperty(prototype, name, {
+                configurable: true,
+                writable: true,
+                value: wrapped
+              });
+
+              if (prototype[name] === wrapped) {
+                return true;
+              }
+            }
+          } catch (error) {
+            /* ब्राउज़र ने native method बदलने से रोका। */
           }
 
           return false;
