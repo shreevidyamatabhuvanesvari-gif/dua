@@ -13,7 +13,7 @@
 
     <meta
       name="description"
-      content="श्रुति — संस्कृत और हिंदी पाठ के वाचन, पाठ-अभ्यास और वीडियो निर्माण के लिए एक स्टूडियो।"
+      content="श्रुति — संस्कृत, हिंदी और वैदिक पाठ के वाचन, पाठ-अभ्यास और वीडियो निर्माण के लिए एक स्टूडियो।"
     />
 
     <meta name="application-name" content="श्रुति" />
@@ -232,80 +232,84 @@
         }
       }
 
-      /* अतिरिक्त सुविधा: वर्तमान TTS पंक्ति का डिस्प्ले */
+      /* =====================================================
+         अतिरिक्त सुविधा: वीडियो स्क्रीन पर वर्तमान TTS पंक्ति
+         ===================================================== */
 
-      #shruti-tts-overlay[hidden] {
+      #shruti-video-tts-overlay[hidden] {
         display: none !important;
       }
 
-      #shruti-tts-overlay {
+      #shruti-video-tts-overlay {
         position: fixed;
         z-index: 2147483647;
-        right: auto;
-        bottom: calc(14px + env(safe-area-inset-bottom, 0px));
-        left: 50%;
-        display: block;
-        width: min(920px, calc(100vw - 24px));
-        max-height: 30vh;
-        overflow-y: auto;
-        padding: 14px 18px;
-        transform: translateX(-50%);
-        border: 1px solid rgba(244, 207, 117, 0.85);
-        border-radius: 18px;
-        background: rgba(15, 10, 27, 0.97);
-        box-shadow:
-          0 0 18px rgba(223, 174, 73, 0.18),
-          0 12px 36px rgba(0, 0, 0, 0.55);
-        text-align: center;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        box-sizing: border-box;
+        padding: 0 3% 12%;
+        overflow: hidden;
         pointer-events: none;
+        background: transparent;
+      }
+
+      #shruti-video-tts-caption {
+        width: 100%;
+        max-height: 45%;
+        overflow-y: auto;
+        padding: 10px 16px;
+        border: 1px solid rgba(244, 207, 117, 0.72);
+        border-radius: 14px;
+        background: rgba(12, 8, 24, 0.86);
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+        text-align: center;
         overflow-wrap: anywhere;
-        -webkit-backdrop-filter: blur(12px);
-        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(5px);
+        backdrop-filter: blur(5px);
       }
 
-      #shruti-tts-overlay .shruti-tts-heading {
-        margin: 0 0 7px;
+      #shruti-video-tts-heading {
+        margin: 0 0 4px;
         color: #f2d18a;
-        font-size: 13px;
+        font-size: clamp(11px, 1.8vw, 15px);
         font-weight: 700;
-        letter-spacing: 0.04em;
       }
 
-      #shruti-tts-overlay .shruti-tts-line {
+      #shruti-video-tts-line {
         margin: 0;
-        color: #f4d078;
+        color: #ffe078;
+        font-size: clamp(17px, 3vw, 30px);
+        font-weight: 800;
+        line-height: 1.65;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
         background: linear-gradient(
           90deg,
-          #ff5b7f 0%,
+          #ff6384 0%,
           #ffb454 16%,
           #ffe77a 32%,
-          #70f0b5 48%,
+          #6aefba 48%,
           #63dcff 64%,
-          #a99aff 80%,
+          #ab99ff 82%,
           #ff90e8 100%
         );
         background-clip: text;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        font-size: clamp(18px, 3.6vw, 27px);
-        font-weight: 800;
-        line-height: 1.8;
-        white-space: pre-wrap;
-        overflow-wrap: anywhere;
       }
 
       @media (max-width: 480px) {
-        #shruti-tts-overlay {
-          width: calc(100vw - 16px);
-          bottom: calc(8px + env(safe-area-inset-bottom, 0px));
-          max-height: 25vh;
-          padding: 10px 12px;
-          border-radius: 14px;
+        #shruti-video-tts-overlay {
+          padding: 0 2% 13%;
         }
 
-        #shruti-tts-overlay .shruti-tts-line {
-          font-size: 19px;
-          line-height: 1.7;
+        #shruti-video-tts-caption {
+          padding: 7px 9px;
+          border-radius: 10px;
+        }
+
+        #shruti-video-tts-line {
+          font-size: clamp(15px, 4vw, 21px);
         }
       }
     </style>
@@ -389,77 +393,159 @@
       </div>
     </noscript>
 
-    <!-- अतिरिक्त सुविधा: बोलते समय वर्तमान पंक्ति दिखाना -->
+    <!-- अतिरिक्त सुविधा: वीडियो पर वर्तमान TTS पंक्ति दिखाएँ -->
     <script>
-      (function installShrutiTtsDisplay() {
+      (function installShrutiVideoCaption() {
         "use strict";
 
-        const synthesis = window.speechSynthesis;
+        const speech = window.speechSynthesis;
 
-        if (!synthesis || typeof synthesis.speak !== "function") {
+        if (!speech || typeof speech.speak !== "function") {
           return;
         }
 
-        /* यह डिस्प्ले #root के बाहर है, इसलिए React इसे मिटाएगा नहीं। */
-        const panel = document.createElement("section");
-        panel.id = "shruti-tts-overlay";
-        panel.setAttribute("aria-label", "वर्तमान वाचन");
-        panel.setAttribute("aria-live", "polite");
-        panel.setAttribute("aria-atomic", "true");
-        panel.hidden = true;
-
-        const heading = document.createElement("p");
-        heading.className = "shruti-tts-heading";
-        heading.textContent = "🔊 वर्तमान वाचन";
-
-        const lineElement = document.createElement("p");
-        lineElement.className = "shruti-tts-line";
-        lineElement.textContent = "";
-
-        panel.appendChild(heading);
-        panel.appendChild(lineElement);
-        document.body.appendChild(panel);
-
-        let activeUtterance = null;
+        let panel;
+        let caption;
+        let heading;
+        let lineElement;
+        let currentUtterance = null;
+        let currentText = "";
         let hideTimer = null;
+        let resizeObserver = null;
+        let observedVideo = null;
 
-        function clearHideTimer() {
+        function createOverlay() {
+          if (document.getElementById("shruti-video-tts-overlay")) {
+            panel = document.getElementById("shruti-video-tts-overlay");
+            caption = document.getElementById("shruti-video-tts-caption");
+            heading = document.getElementById("shruti-video-tts-heading");
+            lineElement = document.getElementById("shruti-video-tts-line");
+            return;
+          }
+
+          panel = document.createElement("div");
+          panel.id = "shruti-video-tts-overlay";
+          panel.hidden = true;
+          panel.setAttribute("aria-label", "वीडियो पर वर्तमान वाचन");
+
+          caption = document.createElement("div");
+          caption.id = "shruti-video-tts-caption";
+
+          heading = document.createElement("p");
+          heading.id = "shruti-video-tts-heading";
+          heading.textContent = "🔊 वर्तमान वाचन";
+
+          lineElement = document.createElement("p");
+          lineElement.id = "shruti-video-tts-line";
+          lineElement.setAttribute("aria-live", "polite");
+
+          caption.appendChild(heading);
+          caption.appendChild(lineElement);
+          panel.appendChild(caption);
+          document.body.appendChild(panel);
+        }
+
+        function findVideo() {
+          const videos = Array.from(document.querySelectorAll("video"));
+
+          const visibleVideos = videos
+            .map(function (video) {
+              const rect = video.getBoundingClientRect();
+              const style = window.getComputedStyle(video);
+
+              return {
+                element: video,
+                area: rect.width * rect.height,
+                visible:
+                  rect.width > 80 &&
+                  rect.height > 50 &&
+                  style.display !== "none" &&
+                  style.visibility !== "hidden" &&
+                  Number(style.opacity) > 0
+              };
+            })
+            .filter(function (item) {
+              return item.visible;
+            })
+            .sort(function (a, b) {
+              return b.area - a.area;
+            });
+
+          return visibleVideos.length
+            ? visibleVideos[0].element
+            : null;
+        }
+
+        function positionOverlay() {
+          if (!panel || !currentText) {
+            if (panel) panel.hidden = true;
+            return;
+          }
+
+          const video = findVideo();
+
+          if (!video) {
+            panel.hidden = true;
+            return;
+          }
+
+          const rect = video.getBoundingClientRect();
+
+          if (rect.width <= 0 || rect.height <= 0) {
+            panel.hidden = true;
+            return;
+          }
+
+          panel.style.left = rect.left + "px";
+          panel.style.top = rect.top + "px";
+          panel.style.width = rect.width + "px";
+          panel.style.height = rect.height + "px";
+          panel.hidden = false;
+
+          if (resizeObserver && observedVideo !== video) {
+            resizeObserver.disconnect();
+            observedVideo = video;
+            resizeObserver.observe(video);
+          }
+        }
+
+        function clearTimer() {
           if (hideTimer !== null) {
             window.clearTimeout(hideTimer);
             hideTimer = null;
           }
         }
 
-        function displayLine(value) {
-          const cleanText = String(value || "")
-            .replace(/\r/g, "")
-            .trim();
+        function displayText(text) {
+          const clean = String(text || "").trim();
 
-          if (!cleanText) {
-            return;
+          if (!clean) return;
+
+          clearTimer();
+          currentText = clean;
+
+          if (lineElement) {
+            lineElement.textContent = clean;
           }
 
-          clearHideTimer();
+          positionOverlay();
+        }
 
-          if (lineElement.textContent !== cleanText) {
-            lineElement.textContent = cleanText;
+        function hideCaption() {
+          clearTimer();
+          currentText = "";
+          currentUtterance = null;
+
+          if (panel) {
+            panel.hidden = true;
           }
-
-          panel.hidden = false;
         }
 
-        function hideDisplay() {
-          clearHideTimer();
-          panel.hidden = true;
-          activeUtterance = null;
-        }
+        function getCurrentLine(text, charIndex) {
+          const source = String(text || "").replace(/\r/g, "");
 
-        /*
-         * यदि एक utterance में कई पंक्तियाँ हैं, तो boundary event
-         * के charIndex से संबंधित पाठ-पंक्ति निकाली जाती है।
-         */
-        function getLineAt(text, charIndex) {
-          const source = String(text || "");
+          if (!source.trim()) return "";
+
           const index = Math.max(
             0,
             Math.min(
@@ -470,160 +556,166 @@
             )
           );
 
-          const start = source.lastIndexOf("\n", Math.max(0, index - 1)) + 1;
+          if (source.includes("\n")) {
+            const start =
+              source.lastIndexOf("\n", Math.max(0, index - 1)) + 1;
 
-          let end = source.indexOf("\n", index);
+            let end = source.indexOf("\n", index);
 
-          if (end === -1) {
-            end = source.length;
+            if (end === -1) {
+              end = source.length;
+            }
+
+            const line = source.slice(start, end).trim();
+
+            if (line) return line;
           }
 
-          const currentLine = source
-            .slice(start, end)
-            .replace(/\r/g, "")
-            .trim();
+          const punctuation = /[।॥.!?;]/g;
+          let start = 0;
+          let end = source.length;
+          let match;
 
-          if (currentLine) {
-            return currentLine;
+          while ((match = punctuation.exec(source)) !== null) {
+            const punctuationEnd = match.index + match[0].length;
+
+            if (punctuationEnd <= index) {
+              start = punctuationEnd;
+            } else {
+              end = punctuationEnd;
+              break;
+            }
           }
 
-          const nextLine = source
-            .slice(index)
-            .split(/\r?\n/)[0]
-            .trim();
+          const sentence = source.slice(start, end).trim();
 
-          if (nextLine) {
-            return nextLine;
-          }
-
-          return source
-            .split(/\r?\n/)
-            .map((item) => item.trim())
-            .find(Boolean) || "";
+          return sentence || source.trim();
         }
 
-        function attachUtteranceListeners(utterance) {
-          if (
-            !utterance ||
-            typeof utterance.text !== "string" ||
-            typeof utterance.addEventListener !== "function"
-          ) {
+        function addUtteranceEvent(utterance, name, callback) {
+          if (typeof utterance.addEventListener === "function") {
+            utterance.addEventListener(name, callback);
             return;
           }
 
-          const spokenText = utterance.text;
+          const property = "on" + name;
+          const previous = utterance[property];
 
-          function handleStart() {
-            clearHideTimer();
-            activeUtterance = utterance;
-            displayLine(getLineAt(spokenText, 0));
-          }
-
-          function handleBoundary(event) {
-            if (activeUtterance !== utterance) {
-              return;
-            }
-
-            if (
-              event &&
-              typeof event.charIndex === "number"
-            ) {
-              displayLine(
-                getLineAt(spokenText, event.charIndex)
-              );
-            }
-          }
-
-          function handleFinish() {
-            if (activeUtterance !== utterance) {
-              return;
-            }
-
-            /*
-             * अगली queued पंक्ति शुरू होने तक डिस्प्ले बना रहता है।
-             */
-            clearHideTimer();
-
-            hideTimer = window.setTimeout(function () {
-              if (activeUtterance === utterance) {
-                hideDisplay();
+          utterance[property] = function (event) {
+            if (typeof previous === "function") {
+              try {
+                previous.call(this, event);
+              } catch (error) {
+                console.error(
+                  "Shruti: मौजूदा TTS callback त्रुटि",
+                  error
+                );
               }
-            }, 1000);
-          }
+            }
 
-          utterance.addEventListener("start", handleStart, {
-            once: true
-          });
-
-          utterance.addEventListener("boundary", handleBoundary);
-
-          utterance.addEventListener("end", handleFinish, {
-            once: true
-          });
-
-          utterance.addEventListener("error", handleFinish, {
-            once: true
-          });
+            callback.call(this, event);
+          };
         }
 
-        /*
-         * मूल speak() को बदले बिना उसके आगे डिस्प्ले की सुविधा जोड़ी जाती है।
-         * मूल ब्राउज़र फ़ंक्शन को उसी utterance के साथ चलाया जाता है।
-         */
-        function patchMethod(methodName, createWrapper) {
-          const originalMethod = synthesis[methodName];
+        function attachEvents(utterance) {
+          if (!utterance || typeof utterance.text !== "string") {
+            return;
+          }
 
-          if (typeof originalMethod !== "function") {
+          const source = utterance.text;
+
+          addUtteranceEvent(utterance, "start", function () {
+            currentUtterance = utterance;
+            displayText(getCurrentLine(source, 0));
+          });
+
+          addUtteranceEvent(utterance, "boundary", function (event) {
+            if (currentUtterance !== utterance) return;
+
+            if (event && typeof event.charIndex === "number") {
+              displayText(getCurrentLine(source, event.charIndex));
+            }
+          });
+
+          function finish() {
+            if (currentUtterance !== utterance) return;
+
+            clearTimer();
+
+            hideTimer = window.setTimeout(function () {
+              if (currentUtterance === utterance) {
+                hideCaption();
+              }
+            }, 900);
+          }
+
+          addUtteranceEvent(utterance, "end", finish);
+          addUtteranceEvent(utterance, "error", finish);
+        }
+
+        function patchMethod(object, name, wrapperFactory) {
+          if (!object || typeof object[name] !== "function") {
             return false;
           }
 
-          const wrappedMethod = createWrapper(originalMethod);
+          const original = object[name];
+          const wrapped = wrapperFactory(original);
 
           try {
-            synthesis[methodName] = wrappedMethod;
+            Object.defineProperty(object, name, {
+              configurable: true,
+              writable: true,
+              value: wrapped
+            });
 
-            if (synthesis[methodName] === wrappedMethod) {
-              return true;
-            }
+            if (object[name] === wrapped) return true;
           } catch (error) {
-            /* नीचे prototype पर वैकल्पिक प्रयास किया जाएगा। */
+            /* वैकल्पिक प्रयास नीचे किया जाता है। */
           }
 
           try {
-            const prototype = Object.getPrototypeOf(synthesis);
+            object[name] = wrapped;
 
-            if (
-              prototype &&
-              prototype[methodName] === originalMethod
-            ) {
-              prototype[methodName] = wrappedMethod;
-
-              if (prototype[methodName] === wrappedMethod) {
-                return true;
-              }
-            }
+            if (object[name] === wrapped) return true;
           } catch (error) {
-            /* कुछ ब्राउज़र इस method को बदलने की अनुमति नहीं देते। */
+            /* कुछ ब्राउज़र native method बदलने की अनुमति नहीं देते। */
           }
 
           return false;
         }
 
-        patchMethod("speak", function (originalSpeak) {
-          return function (utterance) {
-            attachUtteranceListeners(utterance);
+        createOverlay();
 
+        if ("ResizeObserver" in window) {
+          resizeObserver = new ResizeObserver(positionOverlay);
+        }
+
+        window.addEventListener("resize", positionOverlay);
+        window.addEventListener("scroll", positionOverlay, true);
+        document.addEventListener("fullscreenchange", positionOverlay);
+
+        const mutationObserver = new MutationObserver(function () {
+          if (currentText) {
+            positionOverlay();
+          }
+        });
+
+        mutationObserver.observe(document.documentElement, {
+          childList: true,
+          subtree: true
+        });
+
+        patchMethod(speech, "speak", function (originalSpeak) {
+          return function (utterance) {
+            attachEvents(utterance);
             return originalSpeak.call(this, utterance);
           };
         });
 
-        /*
-         * Stop/Cancel बटन से वाचन रुकने पर पुरानी पंक्ति छिप जाती है।
-         */
-        patchMethod("cancel", function (originalCancel) {
+        patchMethod(speech, "cancel", function (originalCancel) {
           return function () {
             const result = originalCancel.apply(this, arguments);
-            hideDisplay();
+            hideCaption();
             return result;
           };
         });
