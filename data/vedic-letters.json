@@ -1,0 +1,400 @@
+{
+  "schemaVersion": 1,
+  "dataset": {
+    "id": "vedic-letters",
+    "title": "संस्कृत एवं वैदिक वर्ण, चिह्न और वाचन-परीक्षण",
+    "language": "sa",
+    "script": "Devanagari",
+    "version": "1.2.1",
+    "description": "मूल संस्कृत वर्ण, स्वरमात्राएँ, देवनागरी पाठ-चिह्न और Unicode Vedic Extensions का विस्तार योग्य संग्रह। यह किसी एक वेद-शाखा की सम्पूर्ण वाचन-परम्परा होने का दावा नहीं करता।",
+    "scope": {
+      "coreVowels": 14,
+      "coreConsonants": 33,
+      "dependentVowelSigns": 13,
+      "assignedVedicExtensionSigns": 43,
+      "vedicExtensionRange": [
+        "U+1CD0",
+        "U+1CFA"
+      ],
+      "unassignedExcluded": [
+        "U+1CFB",
+        "U+1CFC",
+        "U+1CFD",
+        "U+1CFE",
+        "U+1CFF"
+      ]
+    },
+    "audit": {
+      "jsonSyntax": "passed",
+      "entryIds": "passed",
+      "coreCounts": "passed",
+      "unicodeNames": "passed",
+      "vedicExtensionCoverage": "passed",
+      "sourceCrossCheck": "passed",
+      "traditionalVedicUsage": "requires-branch-specific-review",
+      "audioPronunciation": "not-tested",
+      "appIntegration": "not-tested"
+    }
+  },
+  "sources": [
+    {
+      "id": "unicode-devanagari",
+      "title": "Unicode Devanagari Character Names List",
+      "publisher": "The Unicode Consortium",
+      "url": "https://www.unicode.org/Public/18.0.0/charts/nameslist/0900/"
+    },
+    {
+      "id": "unicode-vedic-extensions",
+      "title": "Unicode Vedic Extensions Character Chart",
+      "publisher": "The Unicode Consortium",
+      "url": "https://www.unicode.org/charts/PDF/U1CD0.pdf"
+    },
+    {
+      "id": "vedic-accents",
+      "title": "Sanskrit Lexicon: Accents",
+      "publisher": "Cologne Digital Sanskrit Dictionaries",
+      "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/MWScan/2020/web/webtc1/help/accents.html"
+    },
+    {
+      "id": "sanskrit-alphabet",
+      "title": "Sanskrit Alphabet",
+      "publisher": "Learn Sanskrit",
+      "url": "https://learn-sanskrit.org/sanskrit-alphabet/"
+    }
+  ],
+  "entryDefaults": {
+    "speechText": null,
+    "unicodeIdentity": "verified",
+    "pronunciation": "not-tested",
+    "preserveOriginalCharacter": true,
+    "doNotStripCombiningMarks": true,
+    "unicodeIdentityDoesNotGuaranteeVedicPronunciation": true
+  },
+  "groups": [
+    {
+      "id": "independent-vowels",
+      "title": "स्वतन्त्र स्वर",
+      "category": "independent-vowel",
+      "scope": "core",
+      "verification": {
+        "unicodeIdentity": "verified",
+        "traditionalUse": "review-required-for-rare-vowels",
+        "pronunciation": "not-tested"
+      },
+      "notes": "14 पारम्परिक स्वर-प्रविष्टियाँ; ॠ, ऌ, ॡ दुर्लभ हैं और उनका वास्तविक प्रयोग अलग से जाँचना चाहिए।",
+      "items": [
+        {"id":"SV-001","character":"अ","unicodeCodePoint":"U+0905","label":"अकार","subtype":"hrasva","examples":["अग्निः","अहम्"]},
+        {"id":"SV-002","character":"आ","unicodeCodePoint":"U+0906","label":"आकार","subtype":"dirgha","examples":["आत्मा","आचार्यः"]},
+        {"id":"SV-003","character":"इ","unicodeCodePoint":"U+0907","label":"इकार","subtype":"hrasva","examples":["इति","इन्द्रः"]},
+        {"id":"SV-004","character":"ई","unicodeCodePoint":"U+0908","label":"ईकार","subtype":"dirgha","examples":["ईशः","ईश्वरः"]},
+        {"id":"SV-005","character":"उ","unicodeCodePoint":"U+0909","label":"उकार","subtype":"hrasva","examples":["उषः","उदकम्"]},
+        {"id":"SV-006","character":"ऊ","unicodeCodePoint":"U+090A","label":"ऊकार","subtype":"dirgha","examples":["ऊर्जा","ऊर्ध्वम्"]},
+        {"id":"SV-007","character":"ऋ","unicodeCodePoint":"U+090B","label":"ऋकार","subtype":"vocalic-r","examples":["ऋषिः","ऋत्विजम्"]},
+        {"id":"SV-008","character":"ॠ","unicodeCodePoint":"U+0960","label":"दीर्घ ऋकार","subtype":"vocalic-rr","notes":"दुर्लभ वर्ण; वास्तविक प्रयोग और वाचन अलग से सत्यापित करें।"},
+        {"id":"SV-009","character":"ऌ","unicodeCodePoint":"U+090C","label":"लृकार","subtype":"vocalic-l","notes":"दुर्लभ वर्ण; वास्तविक प्रयोग और वाचन अलग से सत्यापित करें।"},
+        {"id":"SV-010","character":"ॡ","unicodeCodePoint":"U+0961","label":"दीर्घ लृकार","subtype":"vocalic-ll","notes":"दुर्लभ वर्ण; वास्तविक प्रयोग और वाचन अलग से सत्यापित करें।"},
+        {"id":"SV-011","character":"ए","unicodeCodePoint":"U+090F","label":"एकार","subtype":"traditionally-long","examples":["एकः","देवः"],"notes":"स्वर-वर्गीकरण शिक्षण-परम्परा के अनुसार प्रस्तुत है; वास्तविक वाणी-परीक्षण शेष है।"},
+        {"id":"SV-012","character":"ऐ","unicodeCodePoint":"U+0910","label":"ऐकार","subtype":"traditionally-long","examples":["ऐश्वर्यम्","ऐन्द्रः"],"notes":"स्वर-वर्गीकरण शिक्षण-परम्परा के अनुसार प्रस्तुत है; वास्तविक वाणी-परीक्षण शेष है।"},
+        {"id":"SV-013","character":"ओ","unicodeCodePoint":"U+0913","label":"ओकार","subtype":"traditionally-long","examples":["ओजः","ओम्"],"notes":"स्वर-वर्गीकरण शिक्षण-परम्परा के अनुसार प्रस्तुत है; वास्तविक वाणी-परीक्षण शेष है।"},
+        {"id":"SV-014","character":"औ","unicodeCodePoint":"U+0914","label":"औकार","subtype":"traditionally-long","examples":["औषधम्","औचित्यम्"],"notes":"स्वर-वर्गीकरण शिक्षण-परम्परा के अनुसार प्रस्तुत है; वास्तविक वाणी-परीक्षण शेष है।"}
+      ]
+    },
+    {
+      "id": "core-consonants",
+      "title": "मूल संस्कृत व्यञ्जन",
+      "category": "consonant",
+      "scope": "core",
+      "verification": {
+        "unicodeIdentity": "verified",
+        "traditionalUse": "verified",
+        "pronunciation": "not-tested"
+      },
+      "notes": "क से ह तक पारम्परिक 33 मूल संस्कृत व्यञ्जन।",
+      "items": [
+        {"id":"VY-001","character":"क","unicodeCodePoint":"U+0915","label":"ककार","subtype":"velar-stop","examples":["कमलम्","कल्याणम्"],"notes":"पारम्परिक उच्चारण-वर्ग: कण्ठ्य।"},
+        {"id":"VY-002","character":"ख","unicodeCodePoint":"U+0916","label":"खकार","subtype":"velar-stop","examples":["खगः","मुखम्"],"notes":"पारम्परिक उच्चारण-वर्ग: कण्ठ्य।"},
+        {"id":"VY-003","character":"ग","unicodeCodePoint":"U+0917","label":"गकार","subtype":"velar-stop","examples":["गगनम्","गुरुः"],"notes":"पारम्परिक उच्चारण-वर्ग: कण्ठ्य।"},
+        {"id":"VY-004","character":"घ","unicodeCodePoint":"U+0918","label":"घकार","subtype":"velar-stop","examples":["घनः","मेघः"],"notes":"पारम्परिक उच्चारण-वर्ग: कण्ठ्य।"},
+        {"id":"VY-005","character":"ङ","unicodeCodePoint":"U+0919","label":"ङकार","subtype":"velar-nasal","examples":["अङ्गम्","गङ्गा"],"notes":"पारम्परिक उच्चारण-वर्ग: कण्ठ्य।"},
+        {"id":"VY-006","character":"च","unicodeCodePoint":"U+091A","label":"चकार","subtype":"palatal-stop","examples":["चन्द्रः","चरणम्"],"notes":"पारम्परिक उच्चारण-वर्ग: तालव्य।"},
+        {"id":"VY-007","character":"छ","unicodeCodePoint":"U+091B","label":"छकार","subtype":"palatal-stop","examples":["छन्दः","छाया"],"notes":"पारम्परिक उच्चारण-वर्ग: तालव्य।"},
+        {"id":"VY-008","character":"ज","unicodeCodePoint":"U+091C","label":"जकार","subtype":"palatal-stop","examples":["जगत्","जलम्"],"notes":"पारम्परिक उच्चारण-वर्ग: तालव्य।"},
+        {"id":"VY-009","character":"झ","unicodeCodePoint":"U+091D","label":"झकार","subtype":"palatal-stop","notes":"पारम्परिक उच्चारण-वर्ग: तालव्य।"},
+        {"id":"VY-010","character":"ञ","unicodeCodePoint":"U+091E","label":"ञकार","subtype":"palatal-nasal","examples":["पञ्च","यज्ञः"],"notes":"पारम्परिक उच्चारण-वर्ग: तालव्य।"},
+        {"id":"VY-011","character":"ट","unicodeCodePoint":"U+091F","label":"टकार","subtype":"retroflex-stop","examples":["पट्टः","घटः"],"notes":"पारम्परिक उच्चारण-वर्ग: मूर्धन्य।"},
+        {"id":"VY-012","character":"ठ","unicodeCodePoint":"U+0920","label":"ठकार","subtype":"retroflex-stop","examples":["कण्ठः"],"notes":"पारम्परिक उच्चारण-वर्ग: मूर्धन्य।"},
+        {"id":"VY-013","character":"ड","unicodeCodePoint":"U+0921","label":"डकार","subtype":"retroflex-stop","examples":["डमरुः"],"notes":"पारम्परिक उच्चारण-वर्ग: मूर्धन्य।"},
+        {"id":"VY-014","character":"ढ","unicodeCodePoint":"U+0922","label":"ढकार","subtype":"retroflex-stop","examples":["दृढः"],"notes":"पारम्परिक उच्चारण-वर्ग: मूर्धन्य।"},
+        {"id":"VY-015","character":"ण","unicodeCodePoint":"U+0923","label":"णकार","subtype":"retroflex-nasal","examples":["गणः","विष्णुः"],"notes":"पारम्परिक उच्चारण-वर्ग: मूर्धन्य।"},
+        {"id":"VY-016","character":"त","unicodeCodePoint":"U+0924","label":"तकार","subtype":"dental-stop","examples":["तत्त्वम्","तपः"],"notes":"पारम्परिक उच्चारण-वर्ग: दन्त्य।"},
+        {"id":"VY-017","character":"थ","unicodeCodePoint":"U+0925","label":"थकार","subtype":"dental-stop","examples":["अथ","पृथक्"],"notes":"पारम्परिक उच्चारण-वर्ग: दन्त्य।"},
+        {"id":"VY-018","character":"द","unicodeCodePoint":"U+0926","label":"दकार","subtype":"dental-stop","examples":["देवः","दया"],"notes":"पारम्परिक उच्चारण-वर्ग: दन्त्य।"},
+        {"id":"VY-019","character":"ध","unicodeCodePoint":"U+0927","label":"धकार","subtype":"dental-stop","examples":["धर्मः","ध्यानम्"],"notes":"पारम्परिक उच्चारण-वर्ग: दन्त्य।"},
+        {"id":"VY-020","character":"न","unicodeCodePoint":"U+0928","label":"नकार","subtype":"dental-nasal","examples":["नमः","नारायणः"],"notes":"पारम्परिक उच्चारण-वर्ग: दन्त्य।"},
+        {"id":"VY-021","character":"प","unicodeCodePoint":"U+092A","label":"पकार","subtype":"labial-stop","examples":["पदम्","पवित्रम्"],"notes":"पारम्परिक उच्चारण-वर्ग: ओष्ठ्य।"},
+        {"id":"VY-022","character":"फ","unicodeCodePoint":"U+092B","label":"फकार","subtype":"labial-stop","examples":["फलम्","फेनः"],"notes":"पारम्परिक उच्चारण-वर्ग: ओष्ठ्य।"},
+        {"id":"VY-023","character":"ब","unicodeCodePoint":"U+092C","label":"बकार","subtype":"labial-stop","examples":["बलम्","बुद्धिः"],"notes":"पारम्परिक उच्चारण-वर्ग: ओष्ठ्य।"},
+        {"id":"VY-024","character":"भ","unicodeCodePoint":"U+092D","label":"भकार","subtype":"labial-stop","examples":["भवः","भक्ति"],"notes":"पारम्परिक उच्चारण-वर्ग: ओष्ठ्य।"},
+        {"id":"VY-025","character":"म","unicodeCodePoint":"U+092E","label":"मकार","subtype":"labial-nasal","examples":["मन्त्रः","महेशः"],"notes":"पारम्परिक उच्चारण-वर्ग: ओष्ठ्य।"},
+        {"id":"VY-026","character":"य","unicodeCodePoint":"U+092F","label":"यकार","subtype":"semivowel","examples":["यज्ञः","योगः"],"notes":"पारम्परिक उच्चारण-वर्ग: अन्तःस्थ।"},
+        {"id":"VY-027","character":"र","unicodeCodePoint":"U+0930","label":"रेफ","subtype":"semivowel","examples":["रुद्रः","रत्नम्"],"notes":"पारम्परिक उच्चारण-वर्ग: अन्तःस्थ।"},
+        {"id":"VY-028","character":"ल","unicodeCodePoint":"U+0932","label":"लकार","subtype":"semivowel","examples":["ललिता","लोकः"],"notes":"पारम्परिक उच्चारण-वर्ग: अन्तःस्थ।"},
+        {"id":"VY-029","character":"व","unicodeCodePoint":"U+0935","label":"वकार","subtype":"semivowel","examples":["वेदः","वाणी"],"notes":"पारम्परिक उच्चारण-वर्ग: अन्तःस्थ।"},
+        {"id":"VY-030","character":"श","unicodeCodePoint":"U+0936","label":"शकार","subtype":"sibilant","examples":["शिवः","शक्ति"],"notes":"पारम्परिक उच्चारण-वर्ग: ऊष्म।"},
+        {"id":"VY-031","character":"ष","unicodeCodePoint":"U+0937","label":"षकार","subtype":"sibilant","examples":["ऋषिः","पुरुषः"],"notes":"पारम्परिक उच्चारण-वर्ग: ऊष्म।"},
+        {"id":"VY-032","character":"स","unicodeCodePoint":"U+0938","label":"सकार","subtype":"sibilant","examples":["सत्यम्","सरस्वती"],"notes":"पारम्परिक उच्चारण-वर्ग: ऊष्म।"},
+        {"id":"VY-033","character":"ह","unicodeCodePoint":"U+0939","label":"हकार","subtype":"laryngeal","examples":["हरिः","महेश्वरः"],"notes":"पारम्परिक उच्चारण-वर्ग: ऊष्म।"}
+      ]
+    },
+    {
+      "id": "extended-letter",
+      "title": "विस्तारित देवनागरी अक्षर",
+      "category": "extended-letter",
+      "scope": "context-dependent-extension",
+      "verification": {
+        "unicodeIdentity": "verified",
+        "traditionalUse": "review-required",
+        "pronunciation": "not-tested"
+      },
+      "notes": "ळ को मूल 33 व्यञ्जनों में नहीं गिना गया; इसमें परम्परा/भाषा-विशेष का स्रोत आवश्यक है।",
+      "items": [
+        {"id":"VX-001","character":"ळ","unicodeCodePoint":"U+0933","label":"ळकार","subtype":"retroflex-lateral","examples":["ळ (वर्ण-चिह्न परीक्षण)"],"traditionSpecific":true,"requiresClassificationReview":true,"notes":"मूल 33 संस्कृत व्यञ्जनों का भाग नहीं; कुछ भाषिक या पाठ-परम्परा-विशिष्ट उपयोगों में मिलता है। विशिष्ट स्रोत आवश्यक है।"}
+      ]
+    },
+    {
+      "id": "dependent-vowel-signs",
+      "title": "स्वरमात्राएँ",
+      "category": "dependent-vowel-sign",
+      "scope": "core",
+      "verification": {
+        "unicodeIdentity": "verified",
+        "traditionalUse": "review-required-for-rare-vowel-signs",
+        "pronunciation": "not-tested"
+      },
+      "notes": "स्वतन्त्र वर्ण नहीं; व्यञ्जनों के साथ जुड़ने वाले स्वर-चिह्न।",
+      "items": [
+        {"id":"VMAT-001","character":"ा","unicodeCodePoint":"U+093E","label":"आकार-मात्रा","subtype":"vocalic-aa","examples":["का","मा"]},
+        {"id":"VMAT-002","character":"ि","unicodeCodePoint":"U+093F","label":"इकार-मात्रा","subtype":"vocalic-i","examples":["कि","मि"]},
+        {"id":"VMAT-003","character":"ी","unicodeCodePoint":"U+0940","label":"ईकार-मात्रा","subtype":"vocalic-ii","examples":["की","मी"]},
+        {"id":"VMAT-004","character":"ु","unicodeCodePoint":"U+0941","label":"उकार-मात्रा","subtype":"vocalic-u","examples":["कु","मु"]},
+        {"id":"VMAT-005","character":"ू","unicodeCodePoint":"U+0942","label":"ऊकार-मात्रा","subtype":"vocalic-uu","examples":["कू","मू"]},
+        {"id":"VMAT-006","character":"ृ","unicodeCodePoint":"U+0943","label":"ऋकार-मात्रा","subtype":"vocalic-r","examples":["कृ","मृ"]},
+        {"id":"VMAT-007","character":"ॄ","unicodeCodePoint":"U+0944","label":"दीर्घ ऋकार-मात्रा","subtype":"vocalic-rr","notes":"दुर्लभ स्वर-चिह्न; प्रचलित पाठ और आवाज़ का पृथक परीक्षण करें।"},
+        {"id":"VMAT-008","character":"ॢ","unicodeCodePoint":"U+0962","label":"लृकार-मात्रा","subtype":"vocalic-l","notes":"दुर्लभ स्वर-चिह्न; प्रचलित पाठ और आवाज़ का पृथक परीक्षण करें।"},
+        {"id":"VMAT-009","character":"ॣ","unicodeCodePoint":"U+0963","label":"दीर्घ लृकार-मात्रा","subtype":"vocalic-ll","notes":"दुर्लभ स्वर-चिह्न; प्रचलित पाठ और आवाज़ का पृथक परीक्षण करें।"},
+        {"id":"VMAT-010","character":"े","unicodeCodePoint":"U+0947","label":"एकार-मात्रा","subtype":"vocalic-e","examples":["के","मे"]},
+        {"id":"VMAT-011","character":"ै","unicodeCodePoint":"U+0948","label":"ऐकार-मात्रा","subtype":"vocalic-ai","examples":["कै","मै"]},
+        {"id":"VMAT-012","character":"ो","unicodeCodePoint":"U+094B","label":"ओकार-मात्रा","subtype":"vocalic-o","examples":["को","मो"]},
+        {"id":"VMAT-013","character":"ौ","unicodeCodePoint":"U+094C","label":"औकार-मात्रा","subtype":"vocalic-au","examples":["कौ","मौ"]}
+      ]
+    },
+    {
+      "id": "nasal-and-visarga-marks",
+      "title": "अनुस्वार एवं अनुनासिक चिह्न",
+      "category": "ayogavaha",
+      "scope": "script-sign",
+      "verification": {
+        "unicodeIdentity": "verified",
+        "traditionalUse": "review-required",
+        "pronunciation": "not-tested"
+      },
+      "notes": "इन चिह्नों का वास्तविक उच्चारण शब्द और पाठ-परम्परा पर निर्भर हो सकता है।",
+      "items": [
+        {"id":"SG-001","character":"ऀ","unicodeCodePoint":"U+0900","label":"अधोमुख चन्द्रबिन्दु","subtype":"vedic-nasal-mark","examples":["ऀ"],"traditionSpecific":true,"requiresClassificationReview":true,"notes":"वैदिक पाठ-संपादन में प्रयुक्त विशेष चिह्न; परम्परा-विशेष का उपयोग सत्यापित करें।"},
+        {"id":"SG-002","character":"ँ","unicodeCodePoint":"U+0901","label":"चन्द्रबिन्दु / अनुनासिक","subtype":"candrabindu","examples":["अँ"],"notes":"अक्षर के साथ संयोजन में इसका प्रयोग होता है।"},
+        {"id":"SG-003","character":"ं","unicodeCodePoint":"U+0902","label":"अनुस्वार","subtype":"anusvara","examples":["अं","संस्कृतम्"],"notes":"सन्दर्भानुसार ध्वन्यात्मक व्यवहार बदल सकता है।"},
+        {"id":"SG-004","character":"ः","unicodeCodePoint":"U+0903","label":"विसर्ग","subtype":"visarga","examples":["नमः","शिवः"],"notes":"विसर्ग का वाचन प्रसंग तथा पाठ-परम्परा पर निर्भर कर सकता है।"}
+      ]
+    },
+    {
+      "id": "script-marks",
+      "title": "अन्य लिपि-चिह्न",
+      "category": "script-mark",
+      "scope": "script-sign",
+      "verification": {
+        "unicodeIdentity": "verified",
+        "traditionalUse": "review-required",
+        "pronunciation": "not-tested"
+      },
+      "notes": "अवग्रह, हलन्त और नुक्ता; इन्हें हर स्थिति में स्वतंत्र ध्वनि की तरह नहीं पढ़ना चाहिए।",
+      "items": [
+        {"id":"SG-005","character":"्","unicodeCodePoint":"U+094D","label":"हलन्त / विराम","subtype":"virama","examples":["क्","त्"],"notes":"व्यञ्जन की अन्तर्निहित स्वरध्वनि को दबाता है; अकेले स्वर की तरह न पढ़ें।"},
+        {"id":"SG-006","character":"़","unicodeCodePoint":"U+093C","label":"नुक्ता","subtype":"nukta","examples":["ड़","फ़"],"notes":"विस्तारित देवनागरी लेखन में प्रयुक्त; हर प्रविष्टि संस्कृत-मूल नहीं है।"},
+        {"id":"SG-007","character":"ऽ","unicodeCodePoint":"U+093D","label":"अवग्रह","subtype":"avagraha","examples":["गलेऽवलम्ब्य","नमोऽस्तु"],"notes":"अवग्रह को स्वतन्त्र वर्ण की तरह बोलने के बजाय पद और सन्धि के अनुसार संभालें।"}
+      ]
+    },
+    {
+      "id": "sacred-syllable",
+      "title": "प्रणव",
+      "category": "sacred-syllable",
+      "scope": "script-sign",
+      "verification": {
+        "unicodeIdentity": "verified",
+        "traditionalUse": "verified",
+        "pronunciation": "not-tested"
+      },
+      "notes": "ॐ का वाचन एवं स्वर-प्रयोग चयनित परम्परा के अनुसार जाँचना चाहिए।",
+      "items": [
+        {"id":"SG-008","character":"ॐ","unicodeCodePoint":"U+0950","label":"ओंकार / प्रणव","subtype":"om","examples":["ॐ नमः शिवाय"],"traditionSpecific":true,"notes":"वाणी-रूप और स्वर-प्रयोग परम्परा के अनुसार सत्यापित करें।"}
+      ]
+    },
+    {
+      "id": "punctuation",
+      "title": "विराम-चिह्न",
+      "category": "punctuation",
+      "scope": "script-sign",
+      "verification": {
+        "unicodeIdentity": "verified",
+        "traditionalUse": "verified",
+        "pronunciation": "not-tested"
+      },
+      "notes": "दण्ड और द्विदण्ड विराम-चिह्न हैं; स्वयं की ध्वनि नहीं जोड़नी चाहिए।",
+      "items": [
+        {"id":"SG-009","character":"।","unicodeCodePoint":"U+0964","label":"दण्ड","subtype":"danda","examples":["नमः शिवाय ।"],"notes":"विराम-चिह्न; सामान्यतः इसकी स्वयं की ध्वनि नहीं पढ़ी जाती।"},
+        {"id":"SG-010","character":"॥","unicodeCodePoint":"U+0965","label":"द्विदण्ड","subtype":"double-danda","examples":["शिवं ॥"],"notes":"श्लोकान्त का विराम-चिह्न; सामान्यतः इसकी स्वयं की ध्वनि नहीं पढ़ी जाती।"}
+      ]
+    },
+    {
+      "id": "devanagari-vedic-accents",
+      "title": "देवनागरी वैदिक स्वर-चिह्न",
+      "category": "vedic-accent-mark",
+      "scope": "unicode-vedic-mark",
+      "verification": {
+        "unicodeIdentity": "verified",
+        "traditionalUse": "review-required",
+        "pronunciation": "not-tested"
+      },
+      "notes": "Unicode नाम सत्यापित हैं; वास्तविक स्वराघात की व्याख्या शाखा और अंकन-पद्धति से जाँचना होगा।",
+      "items": [
+        {"id":"VA-DEV-001","character":"॑","unicodeCodePoint":"U+0951","label":"देवनागरी उदात्त चिह्न","subtype":"udatta-mark","unicodeName":"DEVANAGARI STRESS SIGN UDATTA","examples":["अ॑"],"traditionSpecific":true,"notes":"Unicode नाम DEVANAGARI STRESS SIGN UDATTA है; वैदिक पाठ में इसका वास्तविक स्वराघात-अर्थ अंकन-पद्धति और परम्परा के अनुसार जाँचना चाहिए।"},
+        {"id":"VA-DEV-002","character":"॒","unicodeCodePoint":"U+0952","label":"देवनागरी अनुदात्त चिह्न","subtype":"anudatta-mark","unicodeName":"DEVANAGARI STRESS SIGN ANUDATTA","examples":["अ॒"],"traditionSpecific":true,"notes":"Unicode नाम DEVANAGARI STRESS SIGN ANUDATTA है; वास्तविक स्वराघात-व्यवहार पाठ-परम्परा के अनुसार जाँचना चाहिए।"}
+      ]
+    },
+    {
+      "id": "unicode-vedic-extensions",
+      "title": "Unicode Vedic Extensions",
+      "category": "vedic-extension",
+      "scope": "unicode-vedic-extensions",
+      "verification": {
+        "unicodeIdentity": "verified",
+        "traditionalUse": "review-required",
+        "pronunciation": "not-tested"
+      },
+      "notes": "प्रत्येक assigned Unicode चिह्न शामिल है; पारम्परिक अर्थ/उच्चारण के लिए वेद-शाखा-सन्दर्भ आवश्यक है।",
+      "items": [
+        {"id":"VE-1CD0","character":"᳐","unicodeCodePoint":"U+1CD0","label":"Tone Karshana","subtype":"tone-karshana","unicodeName":"VEDIC TONE KARSHANA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CD1","character":"᳑","unicodeCodePoint":"U+1CD1","label":"Tone Shara","subtype":"tone-shara","unicodeName":"VEDIC TONE SHARA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CD2","character":"᳒","unicodeCodePoint":"U+1CD2","label":"Tone Prenkha","subtype":"tone-prenkha","unicodeName":"VEDIC TONE PRENKHA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CD3","character":"᳓","unicodeCodePoint":"U+1CD3","label":"Sign Nihshvasa","subtype":"sign-nihshvasa","unicodeName":"VEDIC SIGN NIHSHVASA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CD4","character":"᳔","unicodeCodePoint":"U+1CD4","label":"Sign Yajurmidline Svarita","subtype":"sign-yajurmidline-svarita","unicodeName":"VEDIC SIGN YAJURVEDIC MIDLINE SVARITA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CD5","character":"᳕","unicodeCodePoint":"U+1CD5","label":"Tone Yajuraggravated Independent Svarita","subtype":"tone-yajuraggravated-independent-svarita","unicodeName":"VEDIC TONE YAJURVEDIC AGGRAVATED INDEPENDENT SVARITA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CD6","character":"᳖","unicodeCodePoint":"U+1CD6","label":"Tone Yajurindependent Svarita","subtype":"tone-yajurindependent-svarita","unicodeName":"VEDIC TONE YAJURVEDIC INDEPENDENT SVARITA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CD7","character":"᳗","unicodeCodePoint":"U+1CD7","label":"Tone Yajurkathaka Independent Svarita","subtype":"tone-yajurkathaka-independent-svarita","unicodeName":"VEDIC TONE YAJURVEDIC KATHAKA INDEPENDENT SVARITA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CD8","character":"᳘","unicodeCodePoint":"U+1CD8","label":"Tone Candra Below","subtype":"tone-candra-below","unicodeName":"VEDIC TONE CANDRA BELOW","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CD9","character":"᳙","unicodeCodePoint":"U+1CD9","label":"Tone Yajurkathaka Independent Svarita Schroeder","subtype":"tone-yajurkathaka-independent-svarita-schroeder","unicodeName":"VEDIC TONE YAJURVEDIC KATHAKA INDEPENDENT SVARITA SCHROEDER","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CDA","character":"᳚","unicodeCodePoint":"U+1CDA","label":"Tone Double Svarita","subtype":"tone-double-svarita","unicodeName":"VEDIC TONE DOUBLE SVARITA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CDB","character":"᳛","unicodeCodePoint":"U+1CDB","label":"Tone Triple Svarita","subtype":"tone-triple-svarita","unicodeName":"VEDIC TONE TRIPLE SVARITA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CDC","character":"᳜","unicodeCodePoint":"U+1CDC","label":"Tone Kathaka Anudatta","subtype":"tone-kathaka-anudatta","unicodeName":"VEDIC TONE KATHAKA ANUDATTA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CDD","character":"᳝","unicodeCodePoint":"U+1CDD","label":"Tone Dot Below","subtype":"tone-dot-below","unicodeName":"VEDIC TONE DOT BELOW","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CDE","character":"᳞","unicodeCodePoint":"U+1CDE","label":"Tone Two Dots Below","subtype":"tone-two-dots-below","unicodeName":"VEDIC TONE TWO DOTS BELOW","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CDF","character":"᳟","unicodeCodePoint":"U+1CDF","label":"Tone Three Dots Below","subtype":"tone-three-dots-below","unicodeName":"VEDIC TONE THREE DOTS BELOW","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CE0","character":"᳠","unicodeCodePoint":"U+1CE0","label":"Tone Rigkashmiri Independent Svarita","subtype":"tone-rigkashmiri-independent-svarita","unicodeName":"VEDIC TONE RIGVEDIC KASHMIRI INDEPENDENT SVARITA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CE1","character":"᳡","unicodeCodePoint":"U+1CE1","label":"Tone Atharvaindependent Svarita","subtype":"tone-atharvaindependent-svarita","unicodeName":"VEDIC TONE ATHARVAVEDIC INDEPENDENT SVARITA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CE2","character":"᳢","unicodeCodePoint":"U+1CE2","label":"Sign Visarga Svarita","subtype":"sign-visarga-svarita","unicodeName":"VEDIC SIGN VISARGA SVARITA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CE3","character":"᳣","unicodeCodePoint":"U+1CE3","label":"Sign Visarga Udatta","subtype":"sign-visarga-udatta","unicodeName":"VEDIC SIGN VISARGA UDATTA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CE4","character":"᳤","unicodeCodePoint":"U+1CE4","label":"Sign Reversed Visarga Udatta","subtype":"sign-reversed-visarga-udatta","unicodeName":"VEDIC SIGN REVERSED VISARGA UDATTA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CE5","character":"᳥","unicodeCodePoint":"U+1CE5","label":"Sign Visarga Anudatta","subtype":"sign-visarga-anudatta","unicodeName":"VEDIC SIGN VISARGA ANUDATTA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CE6","character":"᳦","unicodeCodePoint":"U+1CE6","label":"Sign Reversed Visarga Anudatta","subtype":"sign-reversed-visarga-anudatta","unicodeName":"VEDIC SIGN REVERSED VISARGA ANUDATTA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CE7","character":"᳧","unicodeCodePoint":"U+1CE7","label":"Sign Visarga Udatta With Tail","subtype":"sign-visarga-udatta-with-tail","unicodeName":"VEDIC SIGN VISARGA UDATTA WITH TAIL","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CE8","character":"᳨","unicodeCodePoint":"U+1CE8","label":"Sign Visarga Anudatta With Tail","subtype":"sign-visarga-anudatta-with-tail","unicodeName":"VEDIC SIGN VISARGA ANUDATTA WITH TAIL","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CE9","character":"ᳩ","unicodeCodePoint":"U+1CE9","label":"Sign Anusvara Antargomukha","subtype":"sign-anusvara-antargomukha","unicodeName":"VEDIC SIGN ANUSVARA ANTARGOMUKHA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CEA","character":"ᳪ","unicodeCodePoint":"U+1CEA","label":"Sign Anusvara Bahirgomukha","subtype":"sign-anusvara-bahirgomukha","unicodeName":"VEDIC SIGN ANUSVARA BAHIRGOMUKHA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CEB","character":"ᳫ","unicodeCodePoint":"U+1CEB","label":"Sign Anusvara Vamagomukha","subtype":"sign-anusvara-vamagomukha","unicodeName":"VEDIC SIGN ANUSVARA VAMAGOMUKHA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CEC","character":"ᳬ","unicodeCodePoint":"U+1CEC","label":"Sign Anusvara Vamagomukha With Tail","subtype":"sign-anusvara-vamagomukha-with-tail","unicodeName":"VEDIC SIGN ANUSVARA VAMAGOMUKHA WITH TAIL","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CED","character":"᳭","unicodeCodePoint":"U+1CED","label":"Sign Tiryak","subtype":"sign-tiryak","unicodeName":"VEDIC SIGN TIRYAK","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CEE","character":"ᳮ","unicodeCodePoint":"U+1CEE","label":"Sign Hexiform Long Anusvara","subtype":"sign-hexiform-long-anusvara","unicodeName":"VEDIC SIGN HEXIFORM LONG ANUSVARA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CEF","character":"ᳯ","unicodeCodePoint":"U+1CEF","label":"Sign Long Anusvara","subtype":"sign-long-anusvara","unicodeName":"VEDIC SIGN LONG ANUSVARA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CF0","character":"ᳰ","unicodeCodePoint":"U+1CF0","label":"Sign Rthang Long Anusvara","subtype":"sign-rthang-long-anusvara","unicodeName":"VEDIC SIGN RTHANG LONG ANUSVARA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CF1","character":"ᳱ","unicodeCodePoint":"U+1CF1","label":"Sign Anusvara Ubhayato Mukha","subtype":"sign-anusvara-ubhayato-mukha","unicodeName":"VEDIC SIGN ANUSVARA UBHAYATO MUKHA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CF2","character":"ᳲ","unicodeCodePoint":"U+1CF2","label":"Sign Ardhavisarga","subtype":"sign-ardhavisarga","unicodeName":"VEDIC SIGN ARDHAVISARGA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CF3","character":"ᳳ","unicodeCodePoint":"U+1CF3","label":"Sign Rotated Ardhavisarga","subtype":"sign-rotated-ardhavisarga","unicodeName":"VEDIC SIGN ROTATED ARDHAVISARGA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CF4","character":"᳴","unicodeCodePoint":"U+1CF4","label":"Tone Candra Above","subtype":"tone-candra-above","unicodeName":"VEDIC TONE CANDRA ABOVE","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CF5","character":"ᳵ","unicodeCodePoint":"U+1CF5","label":"Sign Jihvamuliya","subtype":"sign-jihvamuliya","unicodeName":"VEDIC SIGN JIHVAMULIYA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CF6","character":"ᳶ","unicodeCodePoint":"U+1CF6","label":"Sign Upadhmaniya","subtype":"sign-upadhmaniya","unicodeName":"VEDIC SIGN UPADHMANIYA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CF7","character":"᳷","unicodeCodePoint":"U+1CF7","label":"Sign Atikrama","subtype":"sign-atikrama","unicodeName":"VEDIC SIGN ATIKRAMA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CF8","character":"᳸","unicodeCodePoint":"U+1CF8","label":"Tone Ring Above","subtype":"tone-ring-above","unicodeName":"VEDIC TONE RING ABOVE","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CF9","character":"᳹","unicodeCodePoint":"U+1CF9","label":"Tone Double Ring Above","subtype":"tone-double-ring-above","unicodeName":"VEDIC TONE DOUBLE RING ABOVE","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true},
+        {"id":"VE-1CFA","character":"ᳺ","unicodeCodePoint":"U+1CFA","label":"Sign Double Anusvara Antargomukha","subtype":"sign-double-anusvara-antargomukha","unicodeName":"VEDIC SIGN DOUBLE ANUSVARA ANTARGOMUKHA","requiresTraditionReview":true,"traditionSpecific":true,"requiresClassificationReview":true}
+      ]
+    }
+  ],
+  "phoneticGroups": [
+    {"id":"ka-varga","label":"कवर्ग","characters":["क","ख","ग","घ","ङ"]},
+    {"id":"ca-varga","label":"चवर्ग","characters":["च","छ","ज","झ","ञ"]},
+    {"id":"tta-varga","label":"टवर्ग","characters":["ट","ठ","ड","ढ","ण"]},
+    {"id":"ta-varga","label":"तवर्ग","characters":["त","थ","द","ध","न"]},
+    {"id":"pa-varga","label":"पवर्ग","characters":["प","फ","ब","भ","म"]},
+    {"id":"antahstha","label":"अन्तःस्थ","characters":["य","र","ल","व"]},
+    {"id":"ushman","label":"ऊष्म","characters":["श","ष","स","ह"]}
+  ],
+  "testCases": [
+    {"id":"TEST-001","title":"अवग्रह और सन्धि","text":"गलेऽवलम्ब्य","expectedBehavior":"मूल पाठ अक्षरशः सुरक्षित रहे; अवग्रह को अलग वर्ण की ध्वनि न बनाया जाए।","sourceRef":{"work":"शिवताण्डवस्तोत्रम्","location":"प्रथम श्लोक"},"status":"needs-source-and-audio-review"},
+    {"id":"TEST-002","title":"ऋकार तथा संयुक्ताक्षर","text":"ऋत्विजम्","expectedBehavior":"ऋकार और संयुक्ताक्षर का पठन जाँचना।","sourceRef":{"work":"ऋग्वेद 1.1.1","location":"मन्त्र में ऋत्विजम्"},"status":"ready-for-audio-test"},
+    {"id":"TEST-003","title":"वैदिक स्वर-चिह्न Unicode preservation","text":"अ॑ अ॒ अ᳚","expectedBehavior":"चिह्न डेटा और स्क्रीन पर सुरक्षित रहें; यह परीक्षण शुद्ध स्वराघात सिद्ध नहीं करता।","sourceRef":null,"status":"orthographic-test-only"},
+    {"id":"TEST-004","title":"संयुक्ताक्षर-समूह","text":"क्षेत्रज्ञः श्रद्धा त्र्यम्बकम्","expectedBehavior":"क्ष, त्र, ज्ञ, श्र और अन्य व्यञ्जन-संयोगों का पठन जाँचना।","sourceRef":null,"status":"ready-for-audio-test"}
+  ],
+  "phonologicalConcepts": {
+    "udatta": {
+      "label": "उदात्त",
+      "synthesisStatus": "not-implemented",
+      "requiresTraditionProfile": true
+    },
+    "anudatta": {
+      "label": "अनुदात्त",
+      "synthesisStatus": "not-implemented",
+      "requiresTraditionProfile": true
+    },
+    "svarita": {
+      "label": "स्वरित",
+      "synthesisStatus": "not-implemented",
+      "requiresTraditionProfile": true
+    },
+    "pluta": {
+      "label": "प्लुत स्वर",
+      "illustrativeText": "ओ३म्",
+      "synthesisStatus": "not-implemented",
+      "requiresTraditionProfile": true,
+      "notes": "प्लुत मात्रा का गुण है, स्वतन्त्र देवनागरी अक्षर नहीं; उदाहरण परम्परा से सत्यापित करें।"
+    }
+  },
+  "pronunciationPolicy": {
+    "displayUsesOriginalCharacter": true,
+    "speechTextFallback": "character",
+    "speechTextCanBeOverriddenPerItem": true,
+    "doNotTreatCombiningMarksAsStandalonePhonemes": true,
+    "doNotSilentlyRemoveAvagrahaOrAccentMarks": true,
+    "useWordContextForSandhi": true,
+    "requireTraditionProfileForVedicAccentSynthesis": true,
+    "requireActualAudioTestForPronunciationPass": true,
+    "unsupportedVoiceBehavior": "मूल पाठ और चिह्न सुरक्षित रखें; यदि आवाज़ स्वराघात नहीं संभालती, तो शुद्ध वैदिक गायन का दावा न करें।"
+  },
+  "futureExtensions": {
+    "allowNewGroups": true,
+    "allowNewItems": true,
+    "allowSourceVariants": true,
+    "allowTraditionProfiles": true,
+    "allowMoreExamples": true,
+    "allowNewTests": true,
+    "recommendedAdditionalDatasets": [
+      "mahesvara-sutras.json",
+      "complex-words.json",
+      "rigveda.json",
+      "brahmana-texts.json",
+      "durga-saptashati.json",
+      "lalita-sahasranama.json",
+      "shiva-tandava.json",
+      "stotra-ratnavali.json",
+      "puranic-verses.json"
+    ]
+  }
+}
