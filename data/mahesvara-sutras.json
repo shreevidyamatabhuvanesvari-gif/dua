@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "dataset": {
+    "id": "mahesvara-sutras",
+    "title": "चतुर्दश माहेश्वर सूत्राणि",
+    "contentType": "mahesvara-sutra",
+    "language": "sa",
+    "script": "Devanagari",
+    "version": "1.0.0",
+    "source": {
+      "title": null,
+      "edition": null,
+      "url": null,
+      "verificationStatus": "pending"
+    },
+    "audit": {
+      "expectedCount": 14,
+      "actualCount": 0,
+      "sequenceVerified": false,
+      "textVerified": false,
+      "checkedAt": null
+    }
+  },
+  "items": []
+}
