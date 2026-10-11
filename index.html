@@ -2,25 +2,316 @@
 <html lang="hi">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+
     <meta name="theme-color" content="#171126" />
-    <meta name="color-scheme" content="dark light" />
+    <meta name="color-scheme" content="dark" />
+
     <meta
       name="description"
-      content="श्रुति — संस्कृत, हिंदी और वैदिक पाठ के सम्मानपूर्ण वाचन तथा वीडियो निर्माण के लिए स्टूडियो।"
+      content="श्रुति — संस्कृत, हिंदी और वैदिक पाठ के वाचन, पाठ-अभ्यास और वीडियो निर्माण के लिए एक स्टूडियो।"
     />
+
     <meta name="application-name" content="श्रुति" />
-    <title>अंजली अवस्थी | श्रुति वैदिक वीडियो स्टूडियो</title>
+    <meta name="robots" content="index, follow" />
+
+    <title>श्रुति | वैदिक पाठ एवं वीडियो स्टूडियो</title>
+
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family:
+          "Noto Sans Devanagari",
+          "Nirmala UI",
+          "Mangal",
+          system-ui,
+          sans-serif;
+        background: #110d1b;
+        color: #f7f0e4;
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        min-width: 320px;
+        min-height: 100%;
+        background: #110d1b;
+      }
+
+      body {
+        min-width: 320px;
+        min-height: 100vh;
+        margin: 0;
+      }
+
+      button {
+        font: inherit;
+      }
+
+      .startup {
+        display: grid;
+        min-height: 100vh;
+        min-height: 100dvh;
+        place-items: center;
+        padding: 24px 16px;
+        background:
+          radial-gradient(
+            ellipse at top,
+            rgba(112, 70, 146, 0.25),
+            transparent 55%
+          ),
+          #110d1b;
+      }
+
+      .startup-card {
+        width: 100%;
+        max-width: 600px;
+        padding: 36px 24px;
+        border: 1px solid rgba(235, 207, 157, 0.22);
+        border-radius: 24px;
+        background: rgba(31, 23, 44, 0.96);
+        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+        text-align: center;
+      }
+
+      .brand-mark {
+        display: grid;
+        width: 76px;
+        height: 76px;
+        margin: 0 auto 18px;
+        place-items: center;
+        border: 1px solid rgba(232, 195, 123, 0.58);
+        border-radius: 50%;
+        background: #2b1d3b;
+        color: #f1d49b;
+        font-size: 38px;
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        color: #d5b97e;
+        font-size: 13px;
+        letter-spacing: 0.08em;
+      }
+
+      h1 {
+        margin: 0;
+        color: #f7e4bd;
+        font-size: clamp(32px, 8vw, 46px);
+        font-weight: 700;
+      }
+
+      .subtitle {
+        margin: 10px 0 0;
+        color: #e5d7c6;
+        font-size: 16px;
+        line-height: 1.8;
+      }
+
+      .divider {
+        width: 72px;
+        height: 2px;
+        margin: 25px auto;
+        background: #cba766;
+      }
+
+      .description {
+        margin: 0;
+        color: #c9bfd2;
+        font-size: 15px;
+        line-height: 1.9;
+      }
+
+      .features {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 26px;
+        text-align: left;
+      }
+
+      .feature {
+        min-height: 74px;
+        padding: 14px;
+        border: 1px solid rgba(235, 207, 157, 0.15);
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.035);
+        color: #eee4f2;
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
+      .status {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 28px;
+        color: #d8c8e2;
+        font-size: 14px;
+      }
+
+      .spinner {
+        width: 17px;
+        height: 17px;
+        flex: 0 0 auto;
+        border: 2px solid rgba(231, 211, 239, 0.25);
+        border-top-color: #e4c27e;
+        border-radius: 50%;
+        animation: spin 0.9s linear infinite;
+      }
+
+      .retry-button {
+        display: inline-flex;
+        min-height: 46px;
+        align-items: center;
+        justify-content: center;
+        margin-top: 22px;
+        padding: 11px 22px;
+        border: 1px solid #dfbd79;
+        border-radius: 12px;
+        background: #dfbd79;
+        color: #21172a;
+        cursor: pointer;
+        font-weight: 700;
+      }
+
+      .retry-button:hover {
+        background: #f0d69f;
+      }
+
+      .retry-button:focus-visible {
+        outline: 3px solid #f7e4bd;
+        outline-offset: 4px;
+      }
+
+      .footer {
+        margin: 24px 0 0;
+        color: #a89bb4;
+        font-size: 12px;
+        line-height: 1.8;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @media (max-width: 420px) {
+        .startup-card {
+          padding: 28px 17px;
+          border-radius: 18px;
+        }
+
+        .features {
+          grid-template-columns: 1fr;
+        }
+
+        .feature {
+          min-height: auto;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          scroll-behavior: auto !important;
+        }
+      }
+    </style>
   </head>
+
   <body>
     <div id="root">
-      <main aria-live="polite" aria-busy="true">
-        <p>श्रुति स्टूडियो तैयार हो रहा है…</p>
+      <main class="startup" aria-live="polite">
+        <section class="startup-card" aria-labelledby="startup-title">
+          <div class="brand-mark" aria-hidden="true">श्री</div>
+
+          <p class="eyebrow">संस्कृत · हिंदी · वैदिक पाठ</p>
+
+          <h1 id="startup-title">श्रुति</h1>
+
+          <p class="subtitle">
+            वैदिक पाठ एवं वीडियो स्टूडियो
+          </p>
+
+          <div class="divider" aria-hidden="true"></div>
+
+          <p class="description">
+            श्रद्धापूर्ण वाचन, पाठ-अभ्यास और वैदिक सामग्री के
+            वीडियो निर्माण के लिए आपका कार्यस्थल।
+          </p>
+
+          <div class="features" aria-label="स्टूडियो की सुविधाएँ">
+            <div class="feature">
+              <strong>पाठ संपादन</strong><br />
+              संस्कृत और हिंदी पाठ के साथ कार्य
+            </div>
+
+            <div class="feature">
+              <strong>वाचन</strong><br />
+              उपलब्ध वाचन सुविधाओं का उपयोग
+            </div>
+
+            <div class="feature">
+              <strong>वीडियो स्टूडियो</strong><br />
+              वीडियो और पाठ को साथ व्यवस्थित करना
+            </div>
+
+            <div class="feature">
+              <strong>पाठ प्रगति</strong><br />
+              वाचन और अभ्यास की स्थिति देखना
+            </div>
+          </div>
+
+          <div class="status">
+            <span class="spinner" aria-hidden="true"></span>
+            <span>श्रुति स्टूडियो शुरू हो रहा है…</span>
+          </div>
+
+          <button
+            class="retry-button"
+            type="button"
+            onclick="window.location.reload()"
+          >
+            स्टूडियो पुनः खोलें
+          </button>
+
+          <p class="footer">
+            यदि यह स्क्रीन लगातार दिखाई दे, तो स्टूडियो की
+            JavaScript लोडिंग की जाँच आवश्यक है।
+          </p>
+        </section>
       </main>
     </div>
+
     <noscript>
-      <p>श्रुति स्टूडियो चलाने के लिए कृपया अपने ब्राउज़र में JavaScript चालू करें।</p>
+      <div
+        style="
+          padding: 24px;
+          color: #ffffff;
+          background: #110d1b;
+          text-align: center;
+          line-height: 1.8;
+        "
+      >
+        श्रुति स्टूडियो चलाने के लिए अपने ब्राउज़र में JavaScript चालू करें।
+      </div>
     </noscript>
+
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
