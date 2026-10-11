@@ -7,6 +7,10 @@ import {
 } from 'react';
 import type { ChangeEvent } from 'react';
 
+import {
+  preparePronunciationText,
+} from './lib/pronunciation';
+
 type ReadStatus = 'ready' | 'reading' | 'paused' | 'completed';
 type SpeechLanguage = 'hi-IN' | 'sa-IN';
 
@@ -14,8 +18,8 @@ const SAMPLE_TEXT =
   'अग्निमीळे पुरोहितं यज्ञस्य देवमृत्विजम्।\nहोतारं रत्नधातमम्॥';
 
 /**
- * पाठ को वाचन की अलग-अलग पंक्तियों में बाँटता है।
- * देवनागरी अक्षरों और वैदिक चिह्नों को बदलता नहीं है।
+ * मूल पाठ को वाचन की अलग-अलग पंक्तियों में बाँटता है।
+ * इस फ़ंक्शन का उपयोग स्क्रीन पर प्रगति दिखाने के लिए भी होता है।
  */
 function splitTextIntoLines(value: string): string[] {
   const physicalLines = value
@@ -71,6 +75,27 @@ function chooseVoice(
   );
 }
 
+/**
+ * मूल पंक्तियों के क्रम को सुरक्षित रखकर हर पंक्ति का
+ * अलग उच्चारण-सहायक पाठ तैयार करता है।
+ *
+ * प्रत्येक मूल पंक्ति के बदले ठीक एक वाचन-पंक्ति रखी जाती है,
+ * जिससे प्रगति-सूची के line index और TTS के line index
+ * एक-दूसरे के अनुरूप रहें।
+ *
+ * यदि सहायक फ़ंक्शन किसी पंक्ति के लिए खाली पाठ लौटाए,
+ * तो मूल पंक्ति को सुरक्षित रखा जाता है।
+ */
+function prepareLinesForSpeech(value: string): string[] {
+  const sourceLines = splitTextIntoLines(value);
+
+  return sourceLines.map((line) => {
+    const preparedLine = preparePronunciationText(line);
+
+    return preparedLine.trim() ? preparedLine : line;
+  });
+}
+
 export default function App() {
   const [videoUrl, setVideoUrl] = useState('');
   const [videoName, setVideoName] = useState('');
@@ -92,6 +117,7 @@ export default function App() {
   const sessionRef = useRef(0);
   const linesRef = useRef<string[]>([]);
 
+  // स्क्रीन पर मूल पाठ की पंक्तियाँ दिखाई जाती हैं।
   const lines = useMemo(
     () => splitTextIntoLines(text),
     [text],
@@ -256,7 +282,7 @@ export default function App() {
   }, []);
 
   /**
-   * एक पंक्ति पढ़ता है और उसके पूरा होने पर अगली पंक्ति शुरू करता है।
+   * एक वाचन-पंक्ति पढ़ता है और पूरी होने पर अगली पंक्ति शुरू करता है।
    * sessionId पुराने वाचन की घटनाओं को नए वाचन में हस्तक्षेप करने से रोकता है।
    */
   const speakLine = useCallback(
@@ -311,7 +337,7 @@ export default function App() {
         if (nextIndex < linesRef.current.length) {
           setCurrentLineIndex(nextIndex);
 
-          // अगली पंक्ति तभी शुरू होती है जब वर्तमान पंक्ति पूरी हो जाती है।
+          // अगली पंक्ति वर्तमान पंक्ति पूरी होने के बाद शुरू होती है।
           window.setTimeout(() => {
             speakLine(nextIndex, sessionId);
           }, 80);
@@ -373,7 +399,8 @@ export default function App() {
       return;
     }
 
-    const preparedLines = splitTextIntoLines(text);
+    // मूल पाठ को बदले बिना अलग वाचन-पंक्तियाँ तैयार करें।
+    const preparedLines = prepareLinesForSpeech(text);
 
     if (preparedLines.length === 0) {
       setMessage(
@@ -388,6 +415,7 @@ export default function App() {
     readingRef.current = false;
     window.speechSynthesis.cancel();
 
+    // speakLine() को उच्चारण-सहायक फ़ंक्शन से तैयार पंक्तियाँ मिलेंगी।
     linesRef.current = preparedLines;
     readingRef.current = true;
 
