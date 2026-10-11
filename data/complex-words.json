@@ -1,0 +1,866 @@
+
+{
+  "schemaVersion": 1,
+  "dataset": {
+    "id": "complex-words",
+    "title": "श्रुति — संस्कृत एवं वैदिक कठिन शब्दों का उच्चारण कोश",
+    "language": "sa",
+    "script": "Devanagari",
+    "version": "1.0.3",
+    "description": "संस्कृत/वैदिक शब्दों के सुरक्षित लिखित रूप, स्पष्ट alias और ऋग्वेद 1.1.1 के संहितापाठ-पदपाठ संदर्भों वाली प्रारंभिक सूची। पाठ-स्रोत की जाँच को विशेषज्ञ उच्चारण या Browser TTS audio test न माना जाए।",
+    "normalization": "Unicode NFC",
+    "matchingPolicy": {
+      "matchMode": "exact-normalized-token-with-explicit-variants",
+      "stripTrailingSentencePunctuation": true,
+      "punctuationToStrip": [
+        "।",
+        "॥",
+        ",",
+        ".",
+        "!",
+        "?",
+        ";"
+      ],
+      "preserveColonForExplicitVariantMatch": true,
+      "stripVedicAccentMarksForLookup": false,
+      "preserveSourceTextInDisplay": true,
+      "unknownWordPolicy": "use-original-token",
+      "lookupOrder": [
+        "exact NFC canonical token",
+        "remove only listed sentence punctuation while preserving colon, then retry canonical token and explicit variants",
+        "fallback to original token"
+      ],
+      "notes": "वैदिक स्वर-चिह्न स्वतः न हटाएँ। नम: को केवल दर्ज alias के रूप में पहचानें।"
+    }
+  },
+  "fieldDefinitions": {
+    "id": "स्थायी अद्वितीय पहचान",
+    "word": "स्रोत-पाठ का सटीक token",
+    "spokenText": "TTS को दिया जाने वाला पाठ; शुद्ध उच्चारण की गारंटी नहीं",
+    "category": "श्रेणी",
+    "tags": "खोज टैग",
+    "variants": "explicit input alias",
+    "notes": "संपादकीय/उच्चारण-सावधानी",
+    "sourceStatus": "स्रोत-पाठ या alias समीक्षा की स्थिति",
+    "sourceRefs": "स्रोत IDs",
+    "textVerification": "लिखित पाठ जाँच; ऑडियो से अलग"
+  },
+  "sources": [
+    {
+      "id": "SRC-RV-1-1-1-VEDIC-HERITAGE",
+      "title": "Vedic Heritage Portal — Rigveda Shakala, Mandala 1, Sukta 1",
+      "url": "https://vedicheritage.gov.in/rigveda-shakala-shakha-mandala-01-sukta-01/",
+      "supports": "ऋग्वेद 1.1.1 की पहचान और आरंभिक पाठ-संदर्भ।"
+    },
+    {
+      "id": "SRC-RV-1-1-1-AUROBINDO",
+      "title": "Rig Veda 1.1.1 — Samhita and Padapatha",
+      "url": "https://sri-aurobindo.co.in/workings/matherials/rigveda/01/01-001.htm",
+      "supports": "स्वर-चिह्नयुक्त/बिना स्वर-चिह्न का संहितापाठ तथा पदपाठ के देवनागरी रूप।"
+    },
+    {
+      "id": "SRC-RV-1-1-1-GOETTINGEN",
+      "title": "Early Vedic — Introduction, Part 3, RV 1.1.1 sample",
+      "url": "https://spw.uni-goettingen.de/projects/aig/doc/VED-INT-003.pdf",
+      "supports": "ऋग्वेद 1.1.1 के पदपाठ और पद-विभाजन का अकादमिक उदाहरण।"
+    }
+  ],
+  "categories": [
+    {
+      "id": "vedic",
+      "label": "वैदिक शब्द"
+    },
+    {
+      "id": "samhita",
+      "label": "संहितापाठ"
+    },
+    {
+      "id": "padapatha",
+      "label": "पदपाठ"
+    },
+    {
+      "id": "sandhi",
+      "label": "संधि या समास"
+    },
+    {
+      "id": "conjunct",
+      "label": "कठिन संयुक्ताक्षर"
+    },
+    {
+      "id": "deity-name",
+      "label": "देवता / देवी नाम"
+    },
+    {
+      "id": "stotra",
+      "label": "स्तोत्र / सहस्रनाम"
+    },
+    {
+      "id": "ritual",
+      "label": "अनुष्ठानिक शब्द"
+    },
+    {
+      "id": "general",
+      "label": "सामान्य संस्कृत"
+    }
+  ],
+  "entryDefaults": {
+    "language": "sa",
+    "script": "Devanagari",
+    "category": "general",
+    "tags": [],
+    "variants": [],
+    "notes": "",
+    "sourceStatus": "needs-review",
+    "sourceRefs": [],
+    "textVerification": "not-reviewed",
+    "pronunciationAudio": "not-tested",
+    "expertPhoneticReview": "not-confirmed",
+    "confidence": "provisional",
+    "enabled": true,
+    "preserveVedicAccents": true
+  },
+  "confidenceLevels": [
+    {
+      "id": "verified",
+      "meaning": "लिखित पाठ, विशेषज्ञ वाचन और आवश्यक ऑडियो परीक्षण सभी पूरे"
+    },
+    {
+      "id": "text-reviewed",
+      "meaning": "लिखित पाठ-स्रोत जाँचे गए; वास्तविक TTS उच्चारण अभी सत्यापित नहीं"
+    },
+    {
+      "id": "reviewed",
+      "meaning": "सामान्य spelling/alias संपादकीय रूप से जाँचा गया"
+    },
+    {
+      "id": "provisional",
+      "meaning": "प्रारंभिक; स्रोत या उच्चारण समीक्षा बाकी"
+    }
+  ],
+  "entries": [
+    {
+      "id": "CW-0001",
+      "word": "अग्निमीळे",
+      "spokenText": "अग्निमीळे",
+      "category": "vedic",
+      "tags": [
+        "ऋग्वेद 1.1.1",
+        "संहितापाठ"
+      ],
+      "notes": "संहितापाठ का पहला पद। इसे स्वतः “अग्निम् ईळे” में न बदलें।",
+      "sourceStatus": "text-source-checked",
+      "sourceRefs": [
+        "SRC-RV-1-1-1-VEDIC-HERITAGE",
+        "SRC-RV-1-1-1-AUROBINDO",
+        "SRC-RV-1-1-1-GOETTINGEN"
+      ],
+      "textVerification": "source-cross-checked"
+    },
+    {
+      "id": "CW-0002",
+      "word": "पुरोहितम्",
+      "spokenText": "पुरोहितम्",
+      "category": "vedic",
+      "tags": [
+        "ऋग्वेद 1.1.1",
+        "पदरूप"
+      ],
+      "notes": "स्वतंत्र पदरूप। संहितापाठ का “पुरोहितं” अलग सतही रूप है; संदर्भ के बिना न बदलें।",
+      "sourceRefs": [
+        "SRC-RV-1-1-1-AUROBINDO"
+      ]
+    },
+    {
+      "id": "CW-0003",
+      "word": "ऋत्विजम्",
+      "spokenText": "ऋत्विजम्",
+      "category": "vedic",
+      "tags": [
+        "ऋग्वेद 1.1.1",
+        "पदपाठ",
+        "ऋ"
+      ],
+      "notes": "पदपाठ का स्वतंत्र रूप। संहितापाठ में संयुक्त token “देवमृत्विजं” आता है।",
+      "sourceStatus": "text-source-checked",
+      "sourceRefs": [
+        "SRC-RV-1-1-1-AUROBINDO",
+        "SRC-RV-1-1-1-GOETTINGEN"
+      ],
+      "textVerification": "source-cross-checked"
+    },
+    {
+      "id": "CW-0004",
+      "word": "यज्ञस्य",
+      "spokenText": "यज्ञस्य",
+      "category": "vedic",
+      "tags": [
+        "ऋग्वेद 1.1.1",
+        "ज्ञ"
+      ],
+      "notes": "मंत्र में प्रयुक्त पद; स्वर-चिह्नयुक्त रूप अलग entry में सुरक्षित है।",
+      "sourceStatus": "text-source-checked",
+      "sourceRefs": [
+        "SRC-RV-1-1-1-AUROBINDO"
+      ],
+      "textVerification": "source-cross-checked"
+    },
+    {
+      "id": "CW-0005",
+      "word": "रत्नधातमम्",
+      "spokenText": "रत्नधातमम्",
+      "category": "vedic",
+      "tags": [
+        "ऋग्वेद 1.1.1",
+        "समास"
+      ],
+      "notes": "संहितापाठ का अंतिम पद; वैदिक स्वर-चिह्नयुक्त रूप अलग entry में है।",
+      "sourceStatus": "text-source-checked",
+      "sourceRefs": [
+        "SRC-RV-1-1-1-AUROBINDO"
+      ],
+      "textVerification": "source-cross-checked"
+    },
+    {
+      "id": "CW-0006",
+      "word": "त्र्यम्बकम्",
+      "spokenText": "त्र्यम्बकम्",
+      "category": "vedic",
+      "tags": [
+        "महामृत्युञ्जय मंत्र",
+        "संयुक्ताक्षर"
+      ],
+      "notes": "स्वतंत्र रूप; मंत्र में “त्र्यम्बकं” सतही रूप भी अलग रखा गया है।"
+    },
+    {
+      "id": "CW-0007",
+      "word": "महामृत्युञ्जय",
+      "spokenText": "महामृत्युञ्जय",
+      "category": "stotra",
+      "tags": [
+        "शिव",
+        "मंत्र"
+      ],
+      "notes": "मूल वर्तनी सुरक्षित रखें; बिना स्रोत-समीक्षा वैकल्पिक spelling न बदलें।"
+    },
+    {
+      "id": "CW-0008",
+      "word": "चामुण्डायै",
+      "spokenText": "चामुण्डायै",
+      "category": "deity-name",
+      "tags": [
+        "दुर्गासप्तशती",
+        "देवी"
+      ],
+      "notes": "मात्राएँ और मूल वर्तनी यथावत रखें; स्रोत-पाठ समीक्षा बाकी।"
+    },
+    {
+      "id": "CW-0009",
+      "word": "महिषासुरमर्दिनि",
+      "spokenText": "महिषासुरमर्दिनि",
+      "category": "stotra",
+      "tags": [
+        "देवी",
+        "स्तोत्र"
+      ],
+      "notes": "स्तोत्र का पाठ-रूप; मूल spelling को स्वतः न बदलें।"
+    },
+    {
+      "id": "CW-0010",
+      "word": "त्रिपुरसुन्दरी",
+      "spokenText": "त्रिपुरसुन्दरी",
+      "category": "deity-name",
+      "tags": [
+        "ललिता",
+        "देवी"
+      ],
+      "notes": "मूल नाम सुरक्षित रखें; spelling variation स्रोत से जाँचें।"
+    },
+    {
+      "id": "CW-0011",
+      "word": "भुवनेश्वरी",
+      "spokenText": "भुवनेश्वरी",
+      "category": "deity-name",
+      "tags": [
+        "देवी",
+        "नाम"
+      ],
+      "notes": "मूल लिखित रूप सुरक्षित रखें; TTS परीक्षण बाकी।"
+    },
+    {
+      "id": "CW-0012",
+      "word": "सहस्रनाम",
+      "spokenText": "सहस्रनाम",
+      "category": "stotra",
+      "tags": [
+        "ललितासहस्रनाम",
+        "संयुक्ताक्षर"
+      ],
+      "notes": "“सहस्र” समूह न हटाएँ; वाचन-रूप बिना समीक्षा न बदलें।"
+    },
+    {
+      "id": "CW-0013",
+      "word": "नारायण्यै",
+      "spokenText": "नारायण्यै",
+      "category": "stotra",
+      "tags": [
+        "देवी",
+        "विभक्ति"
+      ],
+      "notes": "विभक्ति सहित रूप; अपने स्रोत-स्तोत्र से पुष्टि करें।"
+    },
+    {
+      "id": "CW-0014",
+      "word": "चण्डिकायै",
+      "spokenText": "चण्डिकायै",
+      "category": "deity-name",
+      "tags": [
+        "दुर्गासप्तशती",
+        "देवी"
+      ],
+      "notes": "मूल मात्रा और संयुक्ताक्षर सुरक्षित रखें।"
+    },
+    {
+      "id": "CW-0015",
+      "word": "कात्यायन्यै",
+      "spokenText": "कात्यायन्यै",
+      "category": "deity-name",
+      "tags": [
+        "देवी",
+        "विभक्ति"
+      ],
+      "notes": "विभक्ति सहित रूप; स्रोत-पाठ समीक्षा बाकी।"
+    },
+    {
+      "id": "CW-0016",
+      "word": "स्वाहा",
+      "spokenText": "स्वाहा",
+      "category": "ritual",
+      "tags": [
+        "मंत्र",
+        "अनुष्ठान"
+      ],
+      "notes": "दीर्घ “आ” सुरक्षित रखें; ऑडियो परीक्षण बाकी।"
+    },
+    {
+      "id": "CW-0017",
+      "word": "स्वधा",
+      "spokenText": "स्वधा",
+      "category": "ritual",
+      "tags": [
+        "मंत्र",
+        "अनुष्ठान"
+      ],
+      "notes": "“स्वाहा” से अलग शब्द; दोनों न मिलाएँ।"
+    },
+    {
+      "id": "CW-0018",
+      "word": "नमः",
+      "spokenText": "नमः",
+      "category": "ritual",
+      "tags": [
+        "विसर्ग",
+        "मंत्र",
+        "सामान्य शब्द"
+      ],
+      "notes": "मानक देवनागरी रूप “नमः”; ASCII colon वाला “नम:” explicit alias है। विसर्ग-संधि संदर्भ पर निर्भर है।",
+      "variants": [
+        "नम:"
+      ],
+      "sourceStatus": "alias-reviewed",
+      "textVerification": "alias-reviewed"
+    },
+    {
+      "id": "CW-0019",
+      "word": "ॐ",
+      "spokenText": "ॐ",
+      "category": "ritual",
+      "tags": [
+        "प्रणव",
+        "मंत्र"
+      ],
+      "notes": "मूल चिह्न सुरक्षित रखें; हर संदर्भ में स्वतः “ओम्” न बनाएँ। TTS आवाज़ की जाँच बाकी।",
+      "sourceStatus": "common-spelling"
+    },
+    {
+      "id": "CW-0020",
+      "word": "दुःस्वप्न",
+      "spokenText": "दुःस्वप्न",
+      "category": "general",
+      "tags": [
+        "विसर्ग",
+        "संयुक्ताक्षर"
+      ],
+      "notes": "विसर्ग-संबंधी ध्वनि संदर्भ से प्रभावित हो सकती है; मूल पाठ न बदलें।"
+    },
+    {
+      "id": "CW-0021",
+      "word": "क्षेत्रज्ञ",
+      "spokenText": "क्षेत्रज्ञ",
+      "category": "conjunct",
+      "tags": [
+        "क्ष",
+        "ज्ञ"
+      ],
+      "notes": "क्ष और ज्ञ के वाचन में परंपरा/TTS भिन्नता संभव; मूल वर्तनी रखें।"
+    },
+    {
+      "id": "CW-0022",
+      "word": "प्रज्ञा",
+      "spokenText": "प्रज्ञा",
+      "category": "conjunct",
+      "tags": [
+        "ज्ञ"
+      ],
+      "notes": "“ज्ञ” का एक ही सार्वभौमिक TTS उच्चारण न मानें।"
+    },
+    {
+      "id": "CW-0023",
+      "word": "दृष्ट्वा",
+      "spokenText": "दृष्ट्वा",
+      "category": "conjunct",
+      "tags": [
+        "ष्ट्व",
+        "कृदन्त"
+      ],
+      "notes": "संयुक्ताक्षर बनाए रखें; TTS ध्वनि परीक्षण बाकी।"
+    },
+    {
+      "id": "CW-0024",
+      "word": "उच्छिष्ट",
+      "spokenText": "उच्छिष्ट",
+      "category": "conjunct",
+      "tags": [
+        "च्छ",
+        "ष्ट"
+      ],
+      "notes": "मूल संयुक्ताक्षर और मात्रा सुरक्षित रखें।"
+    },
+    {
+      "id": "CW-0025",
+      "word": "क्ष्मापते",
+      "spokenText": "क्ष्मापते",
+      "category": "conjunct",
+      "tags": [
+        "क्ष्म",
+        "समीक्षा बाकी"
+      ],
+      "notes": "स्रोत और प्रसंग की पुष्टि होने तक सक्रिय lookup से बाहर।",
+      "enabled": false
+    },
+    {
+      "id": "CW-0026",
+      "word": "ऋग्वेद",
+      "spokenText": "ऋग्वेद",
+      "category": "general",
+      "tags": [
+        "वेद",
+        "ऋ"
+      ],
+      "notes": "ग्रंथ-नाम का मूल रूप सुरक्षित रखें।",
+      "sourceStatus": "common-spelling"
+    },
+    {
+      "id": "CW-0027",
+      "word": "बृहस्पतिः",
+      "spokenText": "बृहस्पतिः",
+      "category": "general",
+      "tags": [
+        "ऋ",
+        "विसर्ग"
+      ],
+      "notes": "अंतिम विसर्ग सुरक्षित रखें; जुड़े पाठ में संधि भिन्न हो सकती है।"
+    },
+    {
+      "id": "CW-0028",
+      "word": "प्रातःसवन",
+      "spokenText": "प्रातःसवन",
+      "category": "vedic",
+      "tags": [
+        "अनुष्ठान",
+        "विसर्ग"
+      ],
+      "notes": "अनुष्ठानिक शब्द; स्रोत के अनुसार पद-विभाजन जाँचें।"
+    },
+    {
+      "id": "CW-0029",
+      "word": "अध्वर्यु",
+      "spokenText": "अध्वर्यु",
+      "category": "vedic",
+      "tags": [
+        "यज्ञ",
+        "पारिभाषिक"
+      ],
+      "notes": "वैदिक अनुष्ठान का पारिभाषिक शब्द; TTS परीक्षण बाकी।"
+    },
+    {
+      "id": "CW-0030",
+      "word": "होतारम्",
+      "spokenText": "होतारम्",
+      "category": "padapatha",
+      "tags": [
+        "ऋग्वेद 1.1.1",
+        "पदपाठ"
+      ],
+      "notes": "पदपाठ रूप; संहितापाठ में “होतारं” आता है।",
+      "sourceStatus": "text-source-checked",
+      "sourceRefs": [
+        "SRC-RV-1-1-1-AUROBINDO",
+        "SRC-RV-1-1-1-GOETTINGEN"
+      ],
+      "textVerification": "source-cross-checked"
+    },
+    {
+      "id": "CW-0031",
+      "word": "अ॒ग्निमी॑ळे",
+      "spokenText": "अ॒ग्निमी॑ळे",
+      "category": "samhita",
+      "tags": [
+        "ऋग्वेद 1.1.1",
+        "स्वर-चिह्न"
+      ],
+      "notes": "स्वर-चिह्नयुक्त संहितापाठ। चिह्न हटाएँ नहीं; TTS द्वारा वैदिक स्वर सही बोलना अप्रमाणित है।",
+      "sourceStatus": "text-source-checked",
+      "sourceRefs": [
+        "SRC-RV-1-1-1-AUROBINDO",
+        "SRC-RV-1-1-1-GOETTINGEN"
+      ],
+      "textVerification": "source-cross-checked"
+    },
+    {
+      "id": "CW-0032",
+      "word": "पुरोहितं",
+      "spokenText": "पुरोहितं",
+      "category": "samhita",
+      "tags": [
+        "ऋग्वेद 1.1.1",
+        "संहितापाठ"
+      ],
+      "notes": "संहितापाठ का सतही रूप; “पुरोहितम्” से अलग रखें।",
+      "sourceStatus": "text-source-checked",
+      "sourceRefs": [
+        "SRC-RV-1-1-1-AUROBINDO"
+      ],
+      "textVerification": "source-cross-checked"
+    },
+    {
+      "id": "CW-0033",
+      "word": "देवमृत्विजं",
+      "spokenText": "देवमृत्विजं",
+      "category": "samhita",
+      "tags": [
+        "ऋग्वेद 1.1.1",
+        "संहितापाठ",
+        "संधि"
+      ],
+      "notes": "संहितापाठ का जुड़ा token; substring से “ऋत्विजम्” न निकालें।",
+      "sourceStatus": "text-source-checked",
+      "sourceRefs": [
+        "SRC-RV-1-1-1-AUROBINDO"
+      ],
+      "textVerification": "source-cross-checked"
+    },
+    {
+      "id": "CW-0034",
+      "word": "होतारं",
+      "spokenText": "होतारं",
+      "category": "samhita",
+      "tags": [
+        "ऋग्वेद 1.1.1",
+        "संहितापाठ"
+      ],
+      "notes": "संहितापाठ का सतही रूप; पदपाठ “होतारम्” अलग है।",
+      "sourceStatus": "text-source-checked",
+      "sourceRefs": [
+        "SRC-RV-1-1-1-AUROBINDO"
+      ],
+      "textVerification": "source-cross-checked"
+    },
+    {
+      "id": "CW-0035",
+      "word": "अग्निम्",
+      "spokenText": "अग्निम्",
+      "category": "padapatha",
+      "tags": [
+        "ऋग्वेद 1.1.1",
+        "पदपाठ"
+      ],
+      "notes": "पदपाठ का स्वतंत्र पद; संहितारूप “अग्निमीळे” से न बदलें।",
+      "sourceStatus": "text-source-checked",
+      "sourceRefs": [
+        "SRC-RV-1-1-1-AUROBINDO",
+        "SRC-RV-1-1-1-GOETTINGEN"
+      ],
+      "textVerification": "source-cross-checked"
+    },
+    {
+      "id": "CW-0036",
+      "word": "ईळे",
+      "spokenText": "ईळे",
+      "category": "padapatha",
+      "tags": [
+        "ऋग्वेद 1.1.1",
+        "पदपाठ"
+      ],
+      "notes": "पदपाठ का स्वतंत्र पद; स्वर-चिह्नयुक्त रूप अलग है।",
+      "sourceStatus": "text-source-checked",
+      "sourceRefs": [
+        "SRC-RV-1-1-1-AUROBINDO"
+      ],
+      "textVerification": "source-cross-checked"
+    },
+    {
+      "id": "CW-0037",
+      "word": "पु॒रोहि॑तं",
+      "spokenText": "पु॒रोहि॑तं",
+      "category": "samhita",
+      "tags": [
+        "ऋग्वेद 1.1.1",
+        "स्वर-चिह्न"
+      ],
+      "notes": "स्वर-चिह्नयुक्त संहितापाठ; मूल चिह्न सुरक्षित रखें।",
+      "sourceStatus": "text-source-checked",
+      "sourceRefs": [
+        "SRC-RV-1-1-1-AUROBINDO"
+      ],
+      "textVerification": "source-cross-checked"
+    },
+    {
+      "id": "CW-0038",
+      "word": "य॒ज्ञस्य॑",
+      "spokenText": "य॒ज्ञस्य॑",
+      "category": "samhita",
+      "tags": [
+        "ऋग्वेद 1.1.1",
+        "स्वर-चिह्न"
+      ],
+      "notes": "स्वर-चिह्नयुक्त संहितापाठ; सामान्य रूप अलग entry में है।",
+      "sourceStatus": "text-source-checked",
+      "sourceRefs": [
+        "SRC-RV-1-1-1-AUROBINDO"
+      ],
+      "textVerification": "source-cross-checked"
+    },
+    {
+      "id": "CW-0039",
+      "word": "दे॒वमृ॒त्विजं॑",
+      "spokenText": "दे॒वमृ॒त्विजं॑",
+      "category": "samhita",
+      "tags": [
+        "ऋग्वेद 1.1.1",
+        "स्वर-चिह्न"
+      ],
+      "notes": "स्वर-चिह्नयुक्त जुड़ा token; पदपाठ में स्वतः न बाँटें।",
+      "sourceStatus": "text-source-checked",
+      "sourceRefs": [
+        "SRC-RV-1-1-1-AUROBINDO"
+      ],
+      "textVerification": "source-cross-checked"
+    },
+    {
+      "id": "CW-0040",
+      "word": "होता॑रं",
+      "spokenText": "होता॑रं",
+      "category": "samhita",
+      "tags": [
+        "ऋग्वेद 1.1.1",
+        "स्वर-चिह्न"
+      ],
+      "notes": "संहितापाठ का स्वर-चिह्नयुक्त रूप; चिह्न सुरक्षित रखें।",
+      "sourceStatus": "text-source-checked",
+      "sourceRefs": [
+        "SRC-RV-1-1-1-AUROBINDO"
+      ],
+      "textVerification": "source-cross-checked"
+    },
+    {
+      "id": "CW-0041",
+      "word": "रत्न॒धात॑मम्",
+      "spokenText": "रत्न॒धात॑मम्",
+      "category": "samhita",
+      "tags": [
+        "ऋग्वेद 1.1.1",
+        "स्वर-चिह्न"
+      ],
+      "notes": "अंतिम पद का स्वर-चिह्नयुक्त रूप; चिह्न सुरक्षित रखें।",
+      "sourceStatus": "text-source-checked",
+      "sourceRefs": [
+        "SRC-RV-1-1-1-AUROBINDO"
+      ],
+      "textVerification": "source-cross-checked"
+    },
+    {
+      "id": "CW-0042",
+      "word": "त्र्यम्बकं",
+      "spokenText": "त्र्यम्बकं",
+      "category": "vedic",
+      "tags": [
+        "महामृत्युञ्जय मंत्र",
+        "संहितारूप"
+      ],
+      "notes": "मंत्र का सतही रूप; स्वतंत्र “त्र्यम्बकम्” से अलग रखा गया है।"
+    }
+  ],
+  "vedicPassages": [
+    {
+      "id": "RV-1.1.1-SAMHITA-ACCENTED",
+      "sourceReference": "SRC-RV-1-1-1-AUROBINDO",
+      "readingMode": "samhita",
+      "accented": true,
+      "text": "अ॒ग्निमी॑ळे पु॒रोहि॑तं य॒ज्ञस्य॑ दे॒वमृ॒त्विजं॑ । होतारं रत्न॒धात॑मम् ॥",
+      "spokenText": "अ॒ग्निमी॑ळे पु॒रोहि॑तं य॒ज्ञस्य॑ दे॒वमृ॒त्विजं॑ । होतारं रत्न॒धात॑मम् ॥",
+      "enabled": false,
+      "notes": "स्रोत पाठ सुरक्षित रखने का रिकॉर्ड; phrase matching लागू होने तक auto-TTS में उपयोग न करें। वैदिक स्वर का वास्तविक TTS ऑडियो परीक्षण बाकी।"
+    },
+    {
+      "id": "RV-1.1.1-SAMHITA-PLAIN",
+      "sourceReference": "SRC-RV-1-1-1-AUROBINDO",
+      "readingMode": "samhita",
+      "accented": false,
+      "text": "अग्निमीळे पुरोहितं यज्ञस्य देवमृत्विजं । होतारं रत्नधातमम् ॥",
+      "spokenText": "अग्निमीळे पुरोहितं यज्ञस्य देवमृत्विजं । होतारं रत्नधातमम् ॥",
+      "enabled": false,
+      "notes": "स्वर-चिह्न रहित संहितापाठ संदर्भ-रूप; phrase matching के बिना auto-TTS में उपयोग न करें।"
+    },
+    {
+      "id": "RV-1.1.1-PADAPATHA-ACCENTED",
+      "sourceReference": "SRC-RV-1-1-1-AUROBINDO",
+      "readingMode": "padapatha",
+      "accented": true,
+      "text": "अ॒ग्निम् । ई॒ळे॒ । पु॒रःऽहि॑तम् । य॒ज्ञस्य॑ । दे॒वम् । ऋ॒त्विज॑म् । होता॑रम् । र॒त्न॒ऽधात॑मम् ॥",
+      "spokenText": "अ॒ग्निम् । ई॒ळे॒ । पु॒रःऽहि॑तम् । य॒ज्ञस्य॑ । दे॒वम् । ऋ॒त्विज॑म् । होता॑रम् । र॒त्न॒ऽधात॑मम् ॥",
+      "enabled": false,
+      "notes": "स्वर-चिह्नयुक्त पदपाठ; संहितापाठ से अलग। phrase matching और वैदिक TTS परीक्षण बाकी।"
+    },
+    {
+      "id": "RV-1.1.1-PADAPATHA-PLAIN",
+      "sourceReference": "SRC-RV-1-1-1-AUROBINDO",
+      "readingMode": "padapatha",
+      "accented": false,
+      "text": "अग्निम् । ईळे । पुरःऽहितम् । यज्ञस्य । देवम् । ऋत्विजम् । होतारम् । रत्नऽधातमम् ॥",
+      "spokenText": "अग्निम् । ईळे । पुरःऽहितम् । यज्ञस्य । देवम् । ऋत्विजम् । होतारम् । रत्नऽधातमम् ॥",
+      "enabled": false,
+      "notes": "स्वर-चिह्न रहित पदपाठ संदर्भ-रूप; phrase matching लागू होने तक स्वतः इस्तेमाल न करें।"
+    }
+  ],
+  "auditReport": {
+    "jsonSyntax": "passed",
+    "uniqueEntryIds": "passed",
+    "uniqueEntryWords": "passed",
+    "unicodeNFC": "passed",
+    "testReferenceIntegrity": "passed",
+    "rigveda1_1_1TextCrossCheck": "source-cross-checked",
+    "expertVedicRecitationReview": "not-confirmed",
+    "browserTtsAudio": "not-tested",
+    "appIntegration": "not-run",
+    "notes": [
+      "JSON syntax, unique IDs/words, NFC, categories, and test entry references were mechanically checked.",
+      "ऋग्वेद 1.1.1 के पाठ-रूप सूचीबद्ध स्रोतों से मिलाए गए।",
+      "उदात्त, अनुदात्त या स्वरित को browser TTS सही बोलेगा—ऐसा दावा नहीं है।",
+      "vedicPassages को इस्तेमाल करने के लिए phrase-level matching को अलग implement करना होगा."
+    ]
+  },
+  "testCases": [
+    {
+      "id": "CT-001",
+      "input": "अग्निमीळे",
+      "expectedMatchedEntryIds": [
+        "CW-0001"
+      ],
+      "expectedTtsText": "अग्निमीळे",
+      "status": "not-run-until-integrated"
+    },
+    {
+      "id": "CT-002",
+      "input": "अ॒ग्निमी॑ळे",
+      "expectedMatchedEntryIds": [
+        "CW-0031"
+      ],
+      "expectedTtsText": "अ॒ग्निमी॑ळे",
+      "status": "not-run-until-integrated"
+    },
+    {
+      "id": "CT-003",
+      "input": "पुरोहितम्",
+      "expectedMatchedEntryIds": [
+        "CW-0002"
+      ],
+      "expectedTtsText": "पुरोहितम्",
+      "status": "not-run-until-integrated"
+    },
+    {
+      "id": "CT-004",
+      "input": "पुरोहितं",
+      "expectedMatchedEntryIds": [
+        "CW-0032"
+      ],
+      "expectedTtsText": "पुरोहितं",
+      "status": "not-run-until-integrated"
+    },
+    {
+      "id": "CT-005",
+      "input": "ॐ नमः शिवाय",
+      "expectedMatchedEntryIds": [
+        "CW-0019",
+        "CW-0018"
+      ],
+      "expectedTtsText": "ॐ नमः शिवाय",
+      "notes": "शिवाय कोश में नहीं है तो मूल रूप से fallback हो।",
+      "status": "not-run-until-integrated"
+    },
+    {
+      "id": "CT-006",
+      "input": "नम:",
+      "expectedMatchedEntryIds": [
+        "CW-0018"
+      ],
+      "expectedTtsText": "नमः",
+      "status": "not-run-until-integrated"
+    },
+    {
+      "id": "CT-007",
+      "input": "देवमृत्विजं",
+      "expectedMatchedEntryIds": [
+        "CW-0033"
+      ],
+      "expectedTtsText": "देवमृत्विजं",
+      "status": "not-run-until-integrated"
+    },
+    {
+      "id": "CT-008",
+      "input": "अज्ञातपरीक्षणशब्द",
+      "expectedMatchedEntryIds": [],
+      "expectedTtsText": "अज्ञातपरीक्षणशब्द",
+      "status": "not-run-until-integrated"
+    },
+    {
+      "id": "CT-009",
+      "input": "अ॒ग्निमी॑ळे पु॒रोहि॑तं य॒ज्ञस्य॑ दे॒वमृ॒त्विजं॑ । होतारं रत्न॒धात॑मम् ॥",
+      "expectedPhraseId": "RV-1.1.1-SAMHITA-ACCENTED",
+      "expectedTtsText": "अ॒ग्निमी॑ळे पु॒रोहि॑तं य॒ज्ञस्य॑ दे॒वमृ॒त्विजं॑ । होतारं रत्न॒धात॑मम् ॥",
+      "status": "not-run-phrase-integration-required"
+    }
+  ],
+  "integrationContract": {
+    "lookupInput": "NFC-normalized token; वैदिक स्वर-चिह्न सुरक्षित रखें",
+    "lookupOutput": "सक्रिय exact token का spokenText; explicit variant alias मिलने पर canonical entry; अन्यथा मूल token",
+    "displayTextPolicy": "मूल स्रोत-पाठ कभी spokenText से प्रतिस्थापित न हो",
+    "unknownWordPolicy": "fallback-to-original-token",
+    "entryDefaultsPolicy": "छोड़े गए fields entryDefaults से लिए जाएँ",
+    "variantPolicy": "variants alias को code में लागू करना होगा; JSON में दर्ज होना अपने आप पर्याप्त नहीं",
+    "accentPolicy": "स्वर-चिह्नयुक्त token का अलग exact entry है; स्वर-चिह्न strip न करें",
+    "samhitaPolicy": "संहितापाठ के जुड़े पदों को पदपाठ में स्वतः न तोड़ें",
+    "phrasePolicy": "vedicPassages reference data है; tokenization से पहले phrase-level matching अलग से implement करनी होगी",
+    "audioVerificationPolicy": "स्रोत-जाँच, विशेषज्ञ वाचन-समीक्षा और Browser TTS का audio test अलग-अलग हैं"
+  },
+  "editorialRules": [
+    "ऋग्वेद 1.1.1 के संहितापाठ और पदपाठ को अलग रखें।",
+    "अग्निमीळे और अ॒ग्निमी॑ळे अलग exact entries हैं; स्वर-चिह्न स्वतः न हटाएँ।",
+    "पुरोहितम् और संहितापाठ का पुरोहितं अलग लिखित रूप हैं।",
+    "ऋत्विजम् और संहितापाठ का देवमृत्विजं अलग tokens हैं।",
+    "ॐ को बिना नीति/परीक्षण हर जगह ओम् में न बदलें।",
+    "नम: केवल दर्ज input alias है; canonical रूप नमः है।",
+    "क्ष्मापते जैसी स्रोत-पुष्टि-विहीन entry disabled रहे।",
+    "केवल JSON डालने से app नहीं बदलेगा; pronunciation.ts और बाद में App.tsx में integration चाहिए।",
+    "Browser TTS में वैदिक स्वर सही निकलने की गारंटी नहीं; वास्तविक audio test आवश्यक है."
+  ]
+}
