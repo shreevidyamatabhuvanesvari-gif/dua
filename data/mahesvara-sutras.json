@@ -1,3 +1,4 @@
+
 {
   "schemaVersion": 1,
   "dataset": {
@@ -8,18 +9,384 @@
     "script": "Devanagari",
     "version": "1.0.0",
     "source": {
-      "title": null,
-      "edition": null,
-      "url": null,
-      "verificationStatus": "pending"
+      "verificationStatus": "cross-checked",
+      "references": [
+        {
+          "title": "संस्कृत व्याकरण पाठ्य सामग्री",
+          "publisher": "उत्तराखण्ड मुक्त विश्वविद्यालय",
+          "url": "https://uou.ac.in/sites/default/files/slm/AECC-S-102.pdf"
+        },
+        {
+          "title": "Māheśvarasūtrāṇi",
+          "publisher": "Arsha Vidya Center",
+          "url": "https://arshavidyacenter.org/wp-content/uploads/Sanskrit/SanskritGrammar2Sandhi.pdf"
+        }
+      ],
+      "notes": "सूत्रों के पाठ और क्रम का संदर्भ-सामग्री से मिलान किया गया है।"
     },
     "audit": {
       "expectedCount": 14,
-      "actualCount": 0,
-      "sequenceVerified": false,
-      "textVerified": false,
-      "checkedAt": null
+      "actualCount": 14,
+      "sequenceVerified": true,
+      "textCrossChecked": true,
+      "jsonStructureReviewed": true,
+      "speechTested": false,
+      "appIntegrationTested": false,
+      "auditedOn": "2026-10-11",
+      "notes": "पाठ और संरचना की जाँच की गई है। ब्राउज़र में वास्तविक उच्चारण तथा ऐप में लोड होना अभी परीक्षण की प्रतीक्षा में है।"
     }
   },
-  "items": []
+  "extensionGuide": {
+    "description": "इस डेटा संरचना का आधार भविष्य में दूसरे संस्कृत पाठ-संग्रहों के लिए भी अपनाया जा सकता है।",
+    "futureContentTypes": [
+      "mahesvara-sutra",
+      "sanskrit-varna",
+      "vedic-letter",
+      "vedic-accent",
+      "rigveda-ric",
+      "mantra",
+      "shloka",
+      "nama",
+      "stotra",
+      "brahmana-passage",
+      "complex-word",
+      "prose"
+    ],
+    "rules": {
+      "keepOriginalText": true,
+      "keepSpeechTextSeparate": true,
+      "requireStableItemId": true,
+      "preserveSequence": true,
+      "recordSourceForLiteraryTexts": true,
+      "markUnverifiedContent": true,
+      "allowOptionalAnalysis": true,
+      "speechTextNullMeans": "App के नियम के अनुसार मूल displayText इस्तेमाल किया जा सकता है; वास्तविक व्यवहार App में लागू करना होगा।",
+      "recommendedOrganization": "माहेश्वर सूत्र इस फ़ाइल में रहें। अन्य बड़े ग्रन्थों को अलग JSON फ़ाइलों में समान मूल संरचना के साथ रखा जाए।"
+    }
+  },
+  "items": [
+    {
+      "id": "MS-01",
+      "sequence": 1,
+      "type": "sutra",
+      "text": "अइउण्",
+      "displayText": "अइउण् ।",
+      "speechText": null,
+      "analysis": {
+        "sutraSoundsBeforeItMarker": ["अ", "इ", "उ"],
+        "itMarker": "ण्",
+        "markerIncludedInPratyahara": false
+      },
+      "sourceRef": {
+        "work": "चतुर्दश माहेश्वर सूत्राणि",
+        "location": "सूत्र 1"
+      },
+      "tags": ["संस्कृत", "व्याकरण", "माहेश्वर-सूत्र", "स्वर"],
+      "audit": {
+        "textCrossChecked": true,
+        "sequenceVerified": true,
+        "speechTested": false
+      }
+    },
+    {
+      "id": "MS-02",
+      "sequence": 2,
+      "type": "sutra",
+      "text": "ऋऌक्",
+      "displayText": "ऋऌक् ।",
+      "speechText": null,
+      "analysis": {
+        "sutraSoundsBeforeItMarker": ["ऋ", "ऌ"],
+        "itMarker": "क्",
+        "markerIncludedInPratyahara": false
+      },
+      "sourceRef": {
+        "work": "चतुर्दश माहेश्वर सूत्राणि",
+        "location": "सूत्र 2"
+      },
+      "tags": ["संस्कृत", "व्याकरण", "माहेश्वर-सूत्र", "स्वर"],
+      "audit": {
+        "textCrossChecked": true,
+        "sequenceVerified": true,
+        "speechTested": false
+      }
+    },
+    {
+      "id": "MS-03",
+      "sequence": 3,
+      "type": "sutra",
+      "text": "एओङ्",
+      "displayText": "एओङ् ।",
+      "speechText": null,
+      "analysis": {
+        "sutraSoundsBeforeItMarker": ["ए", "ओ"],
+        "itMarker": "ङ्",
+        "markerIncludedInPratyahara": false
+      },
+      "sourceRef": {
+        "work": "चतुर्दश माहेश्वर सूत्राणि",
+        "location": "सूत्र 3"
+      },
+      "tags": ["संस्कृत", "व्याकरण", "माहेश्वर-सूत्र", "स्वर"],
+      "audit": {
+        "textCrossChecked": true,
+        "sequenceVerified": true,
+        "speechTested": false
+      }
+    },
+    {
+      "id": "MS-04",
+      "sequence": 4,
+      "type": "sutra",
+      "text": "ऐऔच्",
+      "displayText": "ऐऔच् ।",
+      "speechText": null,
+      "analysis": {
+        "sutraSoundsBeforeItMarker": ["ऐ", "औ"],
+        "itMarker": "च्",
+        "markerIncludedInPratyahara": false
+      },
+      "sourceRef": {
+        "work": "चतुर्दश माहेश्वर सूत्राणि",
+        "location": "सूत्र 4"
+      },
+      "tags": ["संस्कृत", "व्याकरण", "माहेश्वर-सूत्र", "स्वर"],
+      "audit": {
+        "textCrossChecked": true,
+        "sequenceVerified": true,
+        "speechTested": false
+      }
+    },
+    {
+      "id": "MS-05",
+      "sequence": 5,
+      "type": "sutra",
+      "text": "हयवरट्",
+      "displayText": "हयवरट् ।",
+      "speechText": null,
+      "analysis": {
+        "sutraSoundsBeforeItMarker": ["ह", "य", "व", "र"],
+        "itMarker": "ट्",
+        "markerIncludedInPratyahara": false
+      },
+      "sourceRef": {
+        "work": "चतुर्दश माहेश्वर सूत्राणि",
+        "location": "सूत्र 5"
+      },
+      "tags": ["संस्कृत", "व्याकरण", "माहेश्वर-सूत्र", "व्यञ्जन"],
+      "audit": {
+        "textCrossChecked": true,
+        "sequenceVerified": true,
+        "speechTested": false
+      }
+    },
+    {
+      "id": "MS-06",
+      "sequence": 6,
+      "type": "sutra",
+      "text": "लण्",
+      "displayText": "लण् ।",
+      "speechText": null,
+      "analysis": {
+        "sutraSoundsBeforeItMarker": ["ल"],
+        "itMarker": "ण्",
+        "markerIncludedInPratyahara": false
+      },
+      "sourceRef": {
+        "work": "चतुर्दश माहेश्वर सूत्राणि",
+        "location": "सूत्र 6"
+      },
+      "tags": ["संस्कृत", "व्याकरण", "माहेश्वर-सूत्र", "व्यञ्जन"],
+      "audit": {
+        "textCrossChecked": true,
+        "sequenceVerified": true,
+        "speechTested": false
+      }
+    },
+    {
+      "id": "MS-07",
+      "sequence": 7,
+      "type": "sutra",
+      "text": "ञमङणनम्",
+      "displayText": "ञमङणनम् ।",
+      "speechText": null,
+      "analysis": {
+        "sutraSoundsBeforeItMarker": ["ञ", "म", "ङ", "ण", "न"],
+        "itMarker": "म्",
+        "markerIncludedInPratyahara": false
+      },
+      "sourceRef": {
+        "work": "चतुर्दश माहेश्वर सूत्राणि",
+        "location": "सूत्र 7"
+      },
+      "tags": ["संस्कृत", "व्याकरण", "माहेश्वर-सूत्र", "व्यञ्जन", "नासिक्य"],
+      "audit": {
+        "textCrossChecked": true,
+        "sequenceVerified": true,
+        "speechTested": false
+      }
+    },
+    {
+      "id": "MS-08",
+      "sequence": 8,
+      "type": "sutra",
+      "text": "झभञ्",
+      "displayText": "झभञ् ।",
+      "speechText": null,
+      "analysis": {
+        "sutraSoundsBeforeItMarker": ["झ", "भ"],
+        "itMarker": "ञ्",
+        "markerIncludedInPratyahara": false
+      },
+      "sourceRef": {
+        "work": "चतुर्दश माहेश्वर सूत्राणि",
+        "location": "सूत्र 8"
+      },
+      "tags": ["संस्कृत", "व्याकरण", "माहेश्वर-सूत्र", "व्यञ्जन"],
+      "audit": {
+        "textCrossChecked": true,
+        "sequenceVerified": true,
+        "speechTested": false
+      }
+    },
+    {
+      "id": "MS-09",
+      "sequence": 9,
+      "type": "sutra",
+      "text": "घढधष्",
+      "displayText": "घढधष् ।",
+      "speechText": null,
+      "analysis": {
+        "sutraSoundsBeforeItMarker": ["घ", "ढ", "ध"],
+        "itMarker": "ष्",
+        "markerIncludedInPratyahara": false
+      },
+      "sourceRef": {
+        "work": "चतुर्दश माहेश्वर सूत्राणि",
+        "location": "सूत्र 9"
+      },
+      "tags": ["संस्कृत", "व्याकरण", "माहेश्वर-सूत्र", "व्यञ्जन"],
+      "audit": {
+        "textCrossChecked": true,
+        "sequenceVerified": true,
+        "speechTested": false
+      }
+    },
+    {
+      "id": "MS-10",
+      "sequence": 10,
+      "type": "sutra",
+      "text": "जबगडदश्",
+      "displayText": "जबगडदश् ।",
+      "speechText": null,
+      "analysis": {
+        "sutraSoundsBeforeItMarker": ["ज", "ब", "ग", "ड", "द"],
+        "itMarker": "श्",
+        "markerIncludedInPratyahara": false
+      },
+      "sourceRef": {
+        "work": "चतुर्दश माहेश्वर सूत्राणि",
+        "location": "सूत्र 10"
+      },
+      "tags": ["संस्कृत", "व्याकरण", "माहेश्वर-सूत्र", "व्यञ्जन"],
+      "audit": {
+        "textCrossChecked": true,
+        "sequenceVerified": true,
+        "speechTested": false
+      }
+    },
+    {
+      "id": "MS-11",
+      "sequence": 11,
+      "type": "sutra",
+      "text": "खफछठथचटतव्",
+      "displayText": "खफछठथचटतव् ।",
+      "speechText": null,
+      "analysis": {
+        "sutraSoundsBeforeItMarker": ["ख", "फ", "छ", "ठ", "थ", "च", "ट", "त"],
+        "itMarker": "व्",
+        "markerIncludedInPratyahara": false
+      },
+      "sourceRef": {
+        "work": "चतुर्दश माहेश्वर सूत्राणि",
+        "location": "सूत्र 11"
+      },
+      "tags": ["संस्कृत", "व्याकरण", "माहेश्वर-सूत्र", "व्यञ्जन"],
+      "audit": {
+        "textCrossChecked": true,
+        "sequenceVerified": true,
+        "speechTested": false
+      }
+    },
+    {
+      "id": "MS-12",
+      "sequence": 12,
+      "type": "sutra",
+      "text": "कपय्",
+      "displayText": "कपय् ।",
+      "speechText": null,
+      "analysis": {
+        "sutraSoundsBeforeItMarker": ["क", "प"],
+        "itMarker": "य्",
+        "markerIncludedInPratyahara": false
+      },
+      "sourceRef": {
+        "work": "चतुर्दश माहेश्वर सूत्राणि",
+        "location": "सूत्र 12"
+      },
+      "tags": ["संस्कृत", "व्याकरण", "माहेश्वर-सूत्र", "व्यञ्जन"],
+      "audit": {
+        "textCrossChecked": true,
+        "sequenceVerified": true,
+        "speechTested": false
+      }
+    },
+    {
+      "id": "MS-13",
+      "sequence": 13,
+      "type": "sutra",
+      "text": "शषसर्",
+      "displayText": "शषसर् ।",
+      "speechText": null,
+      "analysis": {
+        "sutraSoundsBeforeItMarker": ["श", "ष", "स"],
+        "itMarker": "र्",
+        "markerIncludedInPratyahara": false
+      },
+      "sourceRef": {
+        "work": "चतुर्दश माहेश्वर सूत्राणि",
+        "location": "सूत्र 13"
+      },
+      "tags": ["संस्कृत", "व्याकरण", "माहेश्वर-सूत्र", "ऊष्म"],
+      "audit": {
+        "textCrossChecked": true,
+        "sequenceVerified": true,
+        "speechTested": false
+      }
+    },
+    {
+      "id": "MS-14",
+      "sequence": 14,
+      "type": "sutra",
+      "text": "हल्",
+      "displayText": "हल् ॥",
+      "speechText": null,
+      "analysis": {
+        "sutraSoundsBeforeItMarker": ["ह"],
+        "itMarker": "ल्",
+        "markerIncludedInPratyahara": false,
+        "pratyaharaNote": "प्रत्याहार हल् में ह से लेकर अन्तिम इत्-चिह्न ल् के पूर्व तक का व्यञ्जन-समूह ग्रहण किया जाता है।"
+      },
+      "sourceRef": {
+        "work": "चतुर्दश माहेश्वर सूत्राणि",
+        "location": "सूत्र 14"
+      },
+      "tags": ["संस्कृत", "व्याकरण", "माहेश्वर-सूत्र", "हल्-प्रत्याहार"],
+      "audit": {
+        "textCrossChecked": true,
+        "sequenceVerified": true,
+        "speechTested": false
+      }
+    }
+  ]
 }
