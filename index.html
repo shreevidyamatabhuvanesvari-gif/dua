@@ -8,139 +8,304 @@
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
 
-    <meta name="theme-color" content="#110d1b" />
+    <meta name="theme-color" content="#171126" />
     <meta name="color-scheme" content="dark" />
 
     <meta
       name="description"
-      content="श्रुति — संस्कृत और हिंदी पाठ, वैदिक वाचन, वीडियो प्लेयर तथा पाठ-अभ्यास के लिए स्टूडियो।"
+      content="श्रुति — संस्कृत और हिंदी पाठ के वाचन, पाठ-अभ्यास और वीडियो निर्माण के लिए एक स्टूडियो।"
     />
 
     <meta name="application-name" content="श्रुति" />
+    <meta name="robots" content="index, follow" />
 
-    <title>अंजली अवस्थी | श्रुति वैदिक वीडियो स्टूडियो</title>
+    <title>श्रुति | वैदिक पाठ एवं वीडियो स्टूडियो</title>
 
     <style>
       :root {
+        color-scheme: dark;
         font-family:
           "Noto Sans Devanagari",
           "Nirmala UI",
           "Mangal",
           system-ui,
           sans-serif;
-        color: #fff4df;
         background: #110d1b;
+        color: #f7f0e4;
         font-synthesis: none;
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
       }
 
       * {
         box-sizing: border-box;
       }
 
-      html,
-      body {
-        width: 100%;
+      html {
         min-width: 320px;
         min-height: 100%;
+        background: #110d1b;
+      }
+
+      body {
+        min-width: 320px;
+        min-height: 100vh;
         margin: 0;
       }
 
-      body {
-        min-height: 100vh;
-        min-height: 100dvh;
-      }
-
-      button,
-      input,
-      textarea,
-      select {
+      button {
         font: inherit;
       }
 
-      button {
-        cursor: pointer;
-      }
-
-      #root {
-        min-height: 100vh;
-        min-height: 100dvh;
-      }
-
-      .app-startup {
+      .startup {
         display: grid;
         min-height: 100vh;
         min-height: 100dvh;
         place-items: center;
-        padding: 24px;
+        padding: 24px 16px;
         background:
           radial-gradient(
             ellipse at top,
-            rgba(168, 102, 45, 0.22),
+            rgba(112, 70, 146, 0.25),
             transparent 55%
           ),
           #110d1b;
       }
 
-      .app-startup__card {
-        width: min(100%, 560px);
-        padding: 32px 24px;
-        border: 1px solid rgba(233, 196, 110, 0.45);
-        border-radius: 22px;
-        background: #191326;
+      .startup-card {
+        width: 100%;
+        max-width: 600px;
+        padding: 36px 24px;
+        border: 1px solid rgba(235, 207, 157, 0.22);
+        border-radius: 24px;
+        background: rgba(31, 23, 44, 0.96);
+        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
         text-align: center;
-        box-shadow: 0 18px 60px rgba(0, 0, 0, 0.4);
       }
 
-      .app-startup__symbol {
-        margin: 0 0 12px;
-        color: #f2ce7a;
-        font-size: 42px;
+      .brand-mark {
+        display: grid;
+        width: 76px;
+        height: 76px;
+        margin: 0 auto 18px;
+        place-items: center;
+        border: 1px solid rgba(232, 195, 123, 0.58);
+        border-radius: 50%;
+        background: #2b1d3b;
+        color: #f1d49b;
+        font-size: 38px;
       }
 
-      .app-startup__title {
+      .eyebrow {
+        margin: 0 0 8px;
+        color: #d5b97e;
+        font-size: 13px;
+        letter-spacing: 0.08em;
+      }
+
+      h1 {
         margin: 0;
-        color: #f5d587;
+        color: #f7e4bd;
         font-size: clamp(32px, 8vw, 46px);
-      }
-
-      .app-startup__subtitle {
-        margin: 10px 0 20px;
-        color: #e7d5bb;
-        line-height: 1.8;
-      }
-
-      .app-startup__status {
-        color: #c8bbd5;
-        font-size: 14px;
-        line-height: 1.8;
-      }
-
-      .app-startup__retry {
-        min-height: 44px;
-        margin-top: 16px;
-        padding: 10px 22px;
-        border: 1px solid #e8c46e;
-        border-radius: 10px;
-        background: #e8c46e;
-        color: #21172b;
         font-weight: 700;
       }
 
-      .app-startup__retry:focus-visible {
-        outline: 3px solid #fff0bf;
-        outline-offset: 3px;
+      .subtitle {
+        margin: 10px 0 0;
+        color: #e5d7c6;
+        font-size: 16px;
+        line-height: 1.8;
+      }
+
+      .divider {
+        width: 72px;
+        height: 2px;
+        margin: 25px auto;
+        background: #cba766;
+      }
+
+      .description {
+        margin: 0;
+        color: #c9bfd2;
+        font-size: 15px;
+        line-height: 1.9;
+      }
+
+      .features {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 26px;
+        text-align: left;
+      }
+
+      .feature {
+        min-height: 74px;
+        padding: 14px;
+        border: 1px solid rgba(235, 207, 157, 0.15);
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.035);
+        color: #eee4f2;
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
+      .status {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 28px;
+        color: #d8c8e2;
+        font-size: 14px;
+      }
+
+      .spinner {
+        width: 17px;
+        height: 17px;
+        flex: 0 0 auto;
+        border: 2px solid rgba(231, 211, 239, 0.25);
+        border-top-color: #e4c27e;
+        border-radius: 50%;
+        animation: spin 0.9s linear infinite;
+      }
+
+      .retry-button {
+        display: inline-flex;
+        min-height: 46px;
+        align-items: center;
+        justify-content: center;
+        margin-top: 22px;
+        padding: 11px 22px;
+        border: 1px solid #dfbd79;
+        border-radius: 12px;
+        background: #dfbd79;
+        color: #21172a;
+        cursor: pointer;
+        font-weight: 700;
+      }
+
+      .retry-button:hover {
+        background: #f0d69f;
+      }
+
+      .retry-button:focus-visible {
+        outline: 3px solid #f7e4bd;
+        outline-offset: 4px;
+      }
+
+      .footer {
+        margin: 24px 0 0;
+        color: #a89bb4;
+        font-size: 12px;
+        line-height: 1.8;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @media (max-width: 420px) {
+        .startup-card {
+          padding: 28px 17px;
+          border-radius: 18px;
+        }
+
+        .features {
+          grid-template-columns: 1fr;
+        }
+
+        .feature {
+          min-height: auto;
+        }
       }
 
       @media (prefers-reduced-motion: reduce) {
         *,
         *::before,
         *::after {
-          scroll-behavior: auto !important;
           animation-duration: 0.01ms !important;
-          transition-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          scroll-behavior: auto !important;
+        }
+      }
+
+      /* अतिरिक्त सुविधा: वर्तमान TTS पंक्ति का डिस्प्ले */
+
+      #shruti-tts-overlay[hidden] {
+        display: none !important;
+      }
+
+      #shruti-tts-overlay {
+        position: fixed;
+        z-index: 2147483647;
+        right: auto;
+        bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+        left: 50%;
+        display: block;
+        width: min(920px, calc(100vw - 24px));
+        max-height: 30vh;
+        overflow-y: auto;
+        padding: 14px 18px;
+        transform: translateX(-50%);
+        border: 1px solid rgba(244, 207, 117, 0.85);
+        border-radius: 18px;
+        background: rgba(15, 10, 27, 0.97);
+        box-shadow:
+          0 0 18px rgba(223, 174, 73, 0.18),
+          0 12px 36px rgba(0, 0, 0, 0.55);
+        text-align: center;
+        pointer-events: none;
+        overflow-wrap: anywhere;
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+      }
+
+      #shruti-tts-overlay .shruti-tts-heading {
+        margin: 0 0 7px;
+        color: #f2d18a;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+      }
+
+      #shruti-tts-overlay .shruti-tts-line {
+        margin: 0;
+        color: #f4d078;
+        background: linear-gradient(
+          90deg,
+          #ff5b7f 0%,
+          #ffb454 16%,
+          #ffe77a 32%,
+          #70f0b5 48%,
+          #63dcff 64%,
+          #a99aff 80%,
+          #ff90e8 100%
+        );
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: clamp(18px, 3.6vw, 27px);
+        font-weight: 800;
+        line-height: 1.8;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+
+      @media (max-width: 480px) {
+        #shruti-tts-overlay {
+          width: calc(100vw - 16px);
+          bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+          max-height: 25vh;
+          padding: 10px 12px;
+          border-radius: 14px;
+        }
+
+        #shruti-tts-overlay .shruti-tts-line {
+          font-size: 19px;
+          line-height: 1.7;
         }
       }
     </style>
@@ -148,45 +313,322 @@
 
   <body>
     <div id="root">
-      <main class="app-startup" aria-live="polite" aria-busy="true">
-        <section class="app-startup__card">
-          <p class="app-startup__symbol" aria-hidden="true">ॐ</p>
+      <main class="startup" aria-live="polite">
+        <section class="startup-card" aria-labelledby="startup-title">
+          <div class="brand-mark" aria-hidden="true">श्री</div>
 
-          <h1 class="app-startup__title">श्रुति</h1>
+          <p class="eyebrow">संस्कृत · हिंदी · वैदिक पाठ</p>
 
-          <p class="app-startup__subtitle">
-            अंजली अवस्थी<br />
+          <h1 id="startup-title">श्रुति</h1>
+
+          <p class="subtitle">
             वैदिक पाठ एवं वीडियो स्टूडियो
           </p>
 
-          <p class="app-startup__status">
-            स्टूडियो लोड हो रहा है…
+          <div class="divider" aria-hidden="true"></div>
+
+          <p class="description">
+            श्रद्धापूर्ण वाचन, पाठ-अभ्यास और वैदिक सामग्री के
+            वीडियो निर्माण के लिए आपका कार्यस्थल।
           </p>
 
+          <div class="features" aria-label="स्टूडियो की सुविधाएँ">
+            <div class="feature">
+              <strong>पाठ संपादन</strong><br />
+              संस्कृत और हिंदी पाठ के साथ कार्य
+            </div>
+
+            <div class="feature">
+              <strong>वाचन</strong><br />
+              उपलब्ध वाचन सुविधाओं का उपयोग
+            </div>
+
+            <div class="feature">
+              <strong>वीडियो स्टूडियो</strong><br />
+              वीडियो और पाठ को साथ व्यवस्थित करना
+            </div>
+
+            <div class="feature">
+              <strong>पाठ प्रगति</strong><br />
+              वाचन और अभ्यास की स्थिति देखना
+            </div>
+          </div>
+
+          <div class="status">
+            <span class="spinner" aria-hidden="true"></span>
+            <span>श्रुति स्टूडियो शुरू हो रहा है…</span>
+          </div>
+
           <button
-            class="app-startup__retry"
+            class="retry-button"
             type="button"
             onclick="window.location.reload()"
           >
-            पुनः प्रयास करें
+            स्टूडियो पुनः खोलें
           </button>
+
+          <p class="footer">
+            यदि यह स्क्रीन लगातार दिखाई दे, तो स्टूडियो की
+            JavaScript लोडिंग की जाँच आवश्यक है।
+          </p>
         </section>
       </main>
     </div>
 
     <noscript>
-      <main
+      <div
         style="
           padding: 24px;
+          color: #ffffff;
           background: #110d1b;
-          color: #fff4df;
           text-align: center;
           line-height: 1.8;
         "
       >
-        श्रुति स्टूडियो चलाने के लिए ब्राउज़र में JavaScript चालू होना चाहिए।
-      </main>
+        श्रुति स्टूडियो चलाने के लिए अपने ब्राउज़र में JavaScript चालू करें।
+      </div>
     </noscript>
+
+    <!-- अतिरिक्त सुविधा: बोलते समय वर्तमान पंक्ति दिखाना -->
+    <script>
+      (function installShrutiTtsDisplay() {
+        "use strict";
+
+        const synthesis = window.speechSynthesis;
+
+        if (!synthesis || typeof synthesis.speak !== "function") {
+          return;
+        }
+
+        /* यह डिस्प्ले #root के बाहर है, इसलिए React इसे मिटाएगा नहीं। */
+        const panel = document.createElement("section");
+        panel.id = "shruti-tts-overlay";
+        panel.setAttribute("aria-label", "वर्तमान वाचन");
+        panel.setAttribute("aria-live", "polite");
+        panel.setAttribute("aria-atomic", "true");
+        panel.hidden = true;
+
+        const heading = document.createElement("p");
+        heading.className = "shruti-tts-heading";
+        heading.textContent = "🔊 वर्तमान वाचन";
+
+        const lineElement = document.createElement("p");
+        lineElement.className = "shruti-tts-line";
+        lineElement.textContent = "";
+
+        panel.appendChild(heading);
+        panel.appendChild(lineElement);
+        document.body.appendChild(panel);
+
+        let activeUtterance = null;
+        let hideTimer = null;
+
+        function clearHideTimer() {
+          if (hideTimer !== null) {
+            window.clearTimeout(hideTimer);
+            hideTimer = null;
+          }
+        }
+
+        function displayLine(value) {
+          const cleanText = String(value || "")
+            .replace(/\r/g, "")
+            .trim();
+
+          if (!cleanText) {
+            return;
+          }
+
+          clearHideTimer();
+
+          if (lineElement.textContent !== cleanText) {
+            lineElement.textContent = cleanText;
+          }
+
+          panel.hidden = false;
+        }
+
+        function hideDisplay() {
+          clearHideTimer();
+          panel.hidden = true;
+          activeUtterance = null;
+        }
+
+        /*
+         * यदि एक utterance में कई पंक्तियाँ हैं, तो boundary event
+         * के charIndex से संबंधित पाठ-पंक्ति निकाली जाती है।
+         */
+        function getLineAt(text, charIndex) {
+          const source = String(text || "");
+          const index = Math.max(
+            0,
+            Math.min(
+              source.length,
+              Number.isFinite(Number(charIndex))
+                ? Number(charIndex)
+                : 0
+            )
+          );
+
+          const start = source.lastIndexOf("\n", Math.max(0, index - 1)) + 1;
+
+          let end = source.indexOf("\n", index);
+
+          if (end === -1) {
+            end = source.length;
+          }
+
+          const currentLine = source
+            .slice(start, end)
+            .replace(/\r/g, "")
+            .trim();
+
+          if (currentLine) {
+            return currentLine;
+          }
+
+          const nextLine = source
+            .slice(index)
+            .split(/\r?\n/)[0]
+            .trim();
+
+          if (nextLine) {
+            return nextLine;
+          }
+
+          return source
+            .split(/\r?\n/)
+            .map((item) => item.trim())
+            .find(Boolean) || "";
+        }
+
+        function attachUtteranceListeners(utterance) {
+          if (
+            !utterance ||
+            typeof utterance.text !== "string" ||
+            typeof utterance.addEventListener !== "function"
+          ) {
+            return;
+          }
+
+          const spokenText = utterance.text;
+
+          function handleStart() {
+            clearHideTimer();
+            activeUtterance = utterance;
+            displayLine(getLineAt(spokenText, 0));
+          }
+
+          function handleBoundary(event) {
+            if (activeUtterance !== utterance) {
+              return;
+            }
+
+            if (
+              event &&
+              typeof event.charIndex === "number"
+            ) {
+              displayLine(
+                getLineAt(spokenText, event.charIndex)
+              );
+            }
+          }
+
+          function handleFinish() {
+            if (activeUtterance !== utterance) {
+              return;
+            }
+
+            /*
+             * अगली queued पंक्ति शुरू होने तक डिस्प्ले बना रहता है।
+             */
+            clearHideTimer();
+
+            hideTimer = window.setTimeout(function () {
+              if (activeUtterance === utterance) {
+                hideDisplay();
+              }
+            }, 1000);
+          }
+
+          utterance.addEventListener("start", handleStart, {
+            once: true
+          });
+
+          utterance.addEventListener("boundary", handleBoundary);
+
+          utterance.addEventListener("end", handleFinish, {
+            once: true
+          });
+
+          utterance.addEventListener("error", handleFinish, {
+            once: true
+          });
+        }
+
+        /*
+         * मूल speak() को बदले बिना उसके आगे डिस्प्ले की सुविधा जोड़ी जाती है।
+         * मूल ब्राउज़र फ़ंक्शन को उसी utterance के साथ चलाया जाता है।
+         */
+        function patchMethod(methodName, createWrapper) {
+          const originalMethod = synthesis[methodName];
+
+          if (typeof originalMethod !== "function") {
+            return false;
+          }
+
+          const wrappedMethod = createWrapper(originalMethod);
+
+          try {
+            synthesis[methodName] = wrappedMethod;
+
+            if (synthesis[methodName] === wrappedMethod) {
+              return true;
+            }
+          } catch (error) {
+            /* नीचे prototype पर वैकल्पिक प्रयास किया जाएगा। */
+          }
+
+          try {
+            const prototype = Object.getPrototypeOf(synthesis);
+
+            if (
+              prototype &&
+              prototype[methodName] === originalMethod
+            ) {
+              prototype[methodName] = wrappedMethod;
+
+              if (prototype[methodName] === wrappedMethod) {
+                return true;
+              }
+            }
+          } catch (error) {
+            /* कुछ ब्राउज़र इस method को बदलने की अनुमति नहीं देते। */
+          }
+
+          return false;
+        }
+
+        patchMethod("speak", function (originalSpeak) {
+          return function (utterance) {
+            attachUtteranceListeners(utterance);
+
+            return originalSpeak.call(this, utterance);
+          };
+        });
+
+        /*
+         * Stop/Cancel बटन से वाचन रुकने पर पुरानी पंक्ति छिप जाती है।
+         */
+        patchMethod("cancel", function (originalCancel) {
+          return function () {
+            const result = originalCancel.apply(this, arguments);
+            hideDisplay();
+            return result;
+          };
+        });
+      })();
+    </script>
 
     <script type="module" src="/src/main.tsx"></script>
   </body>
