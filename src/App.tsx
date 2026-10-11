@@ -8,8 +8,6 @@ import {
 import type { ChangeEvent } from 'react';
 
 import {
-  getMaheshvaraSutraText,
-  getPronunciationDatasetSummary,
   preparePronunciationText,
 } from './lib/pronunciation';
 
@@ -78,10 +76,15 @@ function chooseVoice(
 }
 
 /**
- * मूल पंक्तियों का क्रम सुरक्षित रखते हुए हर पंक्ति के लिए
- * उच्चारण-सहायक पाठ तैयार करता है।
+ * मूल पंक्तियों के क्रम को सुरक्षित रखकर हर पंक्ति का
+ * अलग उच्चारण-सहायक पाठ तैयार करता है।
  *
- * मूल प्रदर्शन-पाठ को state में बदला नहीं जाता।
+ * प्रत्येक मूल पंक्ति के बदले ठीक एक वाचन-पंक्ति रखी जाती है,
+ * जिससे प्रगति-सूची के line index और TTS के line index
+ * एक-दूसरे के अनुरूप रहें।
+ *
+ * यदि सहायक फ़ंक्शन किसी पंक्ति के लिए खाली पाठ लौटाए,
+ * तो मूल पंक्ति को सुरक्षित रखा जाता है।
  */
 function prepareLinesForSpeech(value: string): string[] {
   const sourceLines = splitTextIntoLines(value);
@@ -118,12 +121,6 @@ export default function App() {
   const lines = useMemo(
     () => splitTextIntoLines(text),
     [text],
-  );
-
-  // तीन स्थानीय JSON डेटा-संग्रहों की स्थिति।
-  const datasetSummary = useMemo(
-    () => getPronunciationDatasetSummary(),
-    [],
   );
 
   const speechSupported =
@@ -200,7 +197,6 @@ export default function App() {
   ) => {
     stopForContentChange();
     setText(event.currentTarget.value);
-
     setMessage(
       'पाठ बदला गया है। वाचन शुरू करने पर पंक्तियाँ क्रम से पढ़ी जाएँगी।',
     );
@@ -470,7 +466,6 @@ export default function App() {
 
     window.speechSynthesis.pause();
     setStatus('paused');
-
     setMessage(
       'वाचन रोका गया है। वीडियो चलता रह सकता है। जारी रखने के लिए बटन दबाएँ।',
     );
@@ -506,31 +501,8 @@ export default function App() {
   const loadSample = () => {
     stopForContentChange();
     setText(SAMPLE_TEXT);
-
     setMessage(
       'उदाहरण पाठ भरा गया। वाचन शुरू करने के लिए बटन दबाएँ।',
-    );
-  };
-
-  /**
-   * JSON से सभी 14 माहेश्वर सूत्र टेक्स्ट बॉक्स में भरता है।
-   */
-  const loadMaheshvaraSutras = () => {
-    stopForContentChange();
-
-    const sutraText = getMaheshvaraSutraText();
-
-    if (!sutraText.trim()) {
-      setMessage(
-        'माहेश्वर सूत्रों की फ़ाइल में पढ़ने योग्य पाठ नहीं मिला।',
-      );
-      return;
-    }
-
-    setText(sutraText);
-
-    setMessage(
-      `माहेश्वर सूत्रों का पाठ भरा गया (${datasetSummary.mahesvaraSutras} सूत्र)।`,
     );
   };
 
@@ -757,29 +729,11 @@ export default function App() {
             <button
               className="text-button"
               type="button"
-              onClick={loadMaheshvaraSutras}
-            >
-              माहेश्वर सूत्र भरें
-            </button>
-
-            <button
-              className="text-button"
-              type="button"
               onClick={clearText}
             >
               पाठ साफ़ करें
             </button>
           </div>
-
-          <p
-            className="file-meta"
-            aria-label="डेटा-संग्रह की स्थिति"
-          >
-            विशेष शब्द: {datasetSummary.complexWordEntries} सक्रिय /
-            {datasetSummary.totalComplexWordEntries} कुल ·
-            वर्ण/चिह्न: {datasetSummary.uniqueVedicCharacters} ·
-            माहेश्वर सूत्र: {datasetSummary.mahesvaraSutras}
-          </p>
 
           <div className="settings-grid">
             <div className="setting-control">
